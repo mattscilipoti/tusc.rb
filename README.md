@@ -1,8 +1,17 @@
 # RubyTusClient
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby_tus_client`. To experiment with that code, run `bin/console` for an interactive prompt.
+<img alt="Tus logo" src="https://github.com/tus/tus.io/blob/master/assets/img/tus1.png?raw=true" width="30%" align="right" />
 
-TODO: Delete this and the text above, and describe your gem
+> **tus** is a protocol based on HTTP for *resumable file uploads*. Resumable
+> means that an upload can be interrupted at any moment and can be resumed without
+> re-uploading the previous data again. An interruption may happen willingly, if
+> the user wants to pause, or by accident in case of an network issue or server
+> outage.
+
+ruby_tus_client is a Ruby client for the [tus resumable upload protocol](http://tus.io).
+
+**Protocol version:** 1.0.0
+
 
 ## Installation
 
