@@ -1,27 +1,27 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ruby_tus_client/version"
+require "tusc/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby_tus_client"
-  spec.version       = RubyTusClient::VERSION
+  spec.name          = "tusc"
+  spec.version       = TusClient::VERSION
   spec.authors       = ["Matt Scilipoti"]
   spec.email         = ["matt@scilipoti.name"]
 
   spec.summary       = %q{Ruby client for [tus](https://tus.io/): open protocol for resumable file uploads}
   # spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "https://github.com/mattscilipoti/ruby_tus_client"
+  spec.homepage      = "https://github.com/mattscilipoti/tusc.rb"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata["allowed_push_host"] = "https://github.com/mattscilipoti/tusc.rb"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/mattscilipoti/ruby_tus_client"
-    spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+    spec.metadata["source_code_uri"] = "https://github.com/mattscilipoti/tusc.rb"
+    # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.17"
+  spec.add_development_dependency "pry-byebug", "~> 3.9"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
