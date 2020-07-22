@@ -32,8 +32,8 @@ RSpec.describe TusClient::CreationRequest do
   describe '#perform' do
     let(:expected_uploading_url) { 'tus.example.com/uploading/-1' }
     before(:each) do
-      stub_request(:post, tus_creation_url).
-        to_return(headers: {'Location': expected_uploading_url})
+      stub_request(:post, tus_creation_url)
+        .to_return(headers: { 'Location': expected_uploading_url })
     end
 
     it 'returns a CreationResponse' do
@@ -41,7 +41,13 @@ RSpec.describe TusClient::CreationRequest do
     end
 
     it 'returns a CreationResponse with provided upload_uri' do
-      expect(subject.perform.upload_uri.to_s).to eql(expected_uploading_url)
+      response = subject.perform
+      expect(response.upload_uri.to_s).to eql(expected_uploading_url)
+    end
+
+    it 'derives #status_code from response.code' do
+      response = subject.perform
+      expect(response.status_code).to eql(200)
     end
   end
 end
