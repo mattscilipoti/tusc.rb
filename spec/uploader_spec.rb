@@ -5,58 +5,69 @@ require_relative '../lib/tusc/uploader'
 RSpec.describe TusClient::Uploader do
   describe '(class methods)' do
     describe '.from_file_path (factory method)' do
+      it 'creates new Uploader with File object' do
+        expect(
+          TusClient::Uploader.from_file_path(
+            file_path: __FILE__,
+            upload_url: 'https://example.com'
+          )
+        ).to be_a(TusClient::Uploader)
+      end
+
       it 'should raise error if filepath is empty' do
-        expect{
+        expect do
           TusClient::Uploader.from_file_path(file_path: nil, upload_url: nil)
-        }.to raise_error(ArgumentError, /file_path.*required/)
+        end.to raise_error(ArgumentError, /file_path.*required/)
       end
 
       it 'should raise error if file does not exist' do
-        expect{
+        expect do
           TusClient::Uploader.from_file_path(file_path: 'non_existent_file.jpg', upload_url: nil)
-        }.to raise_error(ArgumentError, /file does NOT exist/)
+        end.to raise_error(ArgumentError, /file does NOT exist/)
       end
     end
 
     describe '.new' do
-      let(:mock_file) { io = StringIO.new("abc") }
+      let(:mock_file) { io = StringIO.new('abc') }
       let(:upload_url) { 'https://tus.io/uploads' }
 
       it 'io is required' do
-        expect{
+        expect do
           TusClient::Uploader.new(io: nil, upload_url: upload_url)
-        }.to raise_error(ArgumentError, /must respond to/)
+        end.to raise_error(ArgumentError, /must respond to/)
 
-        expect{
+        expect do
           TusClient::Uploader.new(io: '', upload_url: upload_url)
-        }.to raise_error(ArgumentError, /must respond to/)
+        end.to raise_error(ArgumentError, /must respond to/)
       end
 
       it 'upload_url is required' do
-        expect{
+        expect do
           TusClient::Uploader.new(io: mock_file, upload_url: nil)
-        }.to raise_error(ArgumentError, /upload_url is required/)
+        end.to raise_error(ArgumentError, /upload_url is required/)
 
-        expect{
+        expect do
           TusClient::Uploader.new(io: mock_file, upload_url: '')
-        }.to raise_error(ArgumentError, /upload_url is required/)
+        end.to raise_error(ArgumentError, /upload_url is required/)
       end
 
       it 'upload_url must be a valid URL' do
-        expect{
+        expect do
           TusClient::Uploader.new(io: mock_file, upload_url: 'foo')
-        }.to raise_error(ArgumentError, /upload_url must be a valid url/)
+        end.to raise_error(ArgumentError, /upload_url must be a valid url/)
       end
     end
   end
 
   describe '(succcessful upload)' do
-    subject(:uploader) { TusClient::Uploader.new(
-      io: mock_file,
-      upload_url: upload_url,
-    )}
+    subject(:uploader) do
+      TusClient::Uploader.new(
+        io: mock_file,
+        upload_url: upload_url
+      )
+    end
 
-    let(:mock_file) { io = StringIO.new("abc") }
+    let(:mock_file) { io = StringIO.new('abc') }
     let(:upload_url) { 'https://tus.io/uploads' }
 
     describe '#get_content_type' do
@@ -87,19 +98,19 @@ RSpec.describe TusClient::Uploader do
       before(:each) do
         # Mock the tus server
         # Increment the Upload-Offset on each request
-        stub_request(:patch, upload_url).
-          with(headers: { 'Upload-Offset' => '0' }).
-          to_return(headers: {'Upload-Offset' => '1'})
+        stub_request(:patch, upload_url)
+          .with(headers: { 'Upload-Offset' => '0' })
+          .to_return(headers: { 'Upload-Offset' => '1' })
 
-        stub_request(:patch, upload_url).
-          with(headers: { 'Upload-Offset' => '1' }).
-          to_return(headers: {'Upload-Offset' => '2'})
+        stub_request(:patch, upload_url)
+          .with(headers: { 'Upload-Offset' => '1' })
+          .to_return(headers: { 'Upload-Offset' => '2' })
 
-        stub_request(:patch, upload_url).
-          with(headers: { 'Upload-Offset' => '2' }).
-          to_return(
-            headers: {'Upload-Offset' => '3'},
-            status: 204, # No Content
+        stub_request(:patch, upload_url)
+          .with(headers: { 'Upload-Offset' => '2' })
+          .to_return(
+            headers: { 'Upload-Offset' => '3' },
+            status: 204 # No Content
           )
       end
 
@@ -108,13 +119,13 @@ RSpec.describe TusClient::Uploader do
       let(:mock_file_size) { mock_file_contents.size }
 
       let(:mock_file) do
-        instance_double("File").tap do |io|
+        instance_double('File').tap do |io|
           allow(io).to receive(:rewind)
           allow(io).to receive(:size).and_return(3) # size of mock_file_contents
           # webmock returns an incrementing Upload-Offset
-          allow(io).to receive(:read).with(1,0).and_return('a')
-          allow(io).to receive(:read).with(1,1).and_return('b')
-          allow(io).to receive(:read).with(1,2).and_return('c')
+          allow(io).to receive(:read).with(1, 0).and_return('a')
+          allow(io).to receive(:read).with(1, 1).and_return('b')
+          allow(io).to receive(:read).with(1, 2).and_return('c')
           expect(io).to receive(:close)
         end
       end

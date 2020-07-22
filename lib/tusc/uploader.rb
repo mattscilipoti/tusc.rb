@@ -15,6 +15,8 @@ class TusClient::Uploader
 
     file_pathname = Pathname.new(file_path)
     raise ArgumentError, "Passed file does NOT exist: #{file_pathname.inspect}" unless file_pathname.exist?
+
+    new(io: file_pathname.open, upload_url: upload_url)
   end
 
   def initialize(io:, upload_url:)
