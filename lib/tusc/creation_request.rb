@@ -3,10 +3,12 @@ require_relative '../core_ext/string/truncate'
 
 # Sends the creation request to the tus server
 class TusClient::CreationRequest
-  attr_reader :file_size, :tus_creation_url
-  def initialize(tus_creation_url:, file_size:)
+  attr_reader :body, :extra_headers, :file_size, :tus_creation_url
+  def initialize(tus_creation_url:, file_size:, extra_headers: {}, body: nil)
     @tus_creation_url = tus_creation_url
     @file_size = file_size
+    @extra_headers = extra_headers
+    @body = body
   end
 
   def headers
@@ -14,7 +16,7 @@ class TusClient::CreationRequest
       'Content-Length' => 0.to_s,
       'Tus-Resumable' => supported_tus_resumable_versions.first,
       'Upload-Length' => file_size.to_s
-    }
+    }.merge(extra_headers)
   end
 
   def logger
@@ -25,9 +27,8 @@ class TusClient::CreationRequest
   # returns an upload_url (in CreationResponse)
   def perform
     logger.debug do
-      [ 'TUS POST',
-        sending: { tus_creation_url: tus_creation_uri.to_s, header: headers }
-      ]
+      ['TUS POST',
+       sending: { tus_creation_url: tus_creation_uri.to_s, header: headers }]
     end
 
     response = Net::HTTP.start(
@@ -35,18 +36,17 @@ class TusClient::CreationRequest
       tus_creation_uri.port,
       use_ssl: tus_creation_uri.scheme == 'https'
     ) do |http|
-      http.post(tus_creation_uri.path, nil, headers)
+      http.post(tus_creation_uri.path, body, headers)
     end
 
-    received_header = response.each_key.collect{|k| {k => response.header[k]} }
+    received_header = response.each_key.collect { |k| { k => response.header[k] } }
     logger.debug do
-      [ "TUS POST",
-        received: {
-          status: response.code,
-          header: received_header,
-          body: response.body.to_s.truncate_middle(60)
-        }
-      ]
+      ['TUS POST',
+       received: {
+         status: response.code,
+         header: received_header,
+         body: response.body.to_s.truncate_middle(60)
+       }]
     end
 
     TusClient::CreationResponse.new(response)
