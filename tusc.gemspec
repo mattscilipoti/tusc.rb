@@ -36,8 +36,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "activesupport", "~> 6.0"
+  spec.add_dependency "mimemagic", "~> 0.3"
+  spec.add_dependency "ougai", "~> 1.8" # for structured logging, child log per file
+
+  spec.add_development_dependency "amazing_print", "~> 1.2"
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "pry-byebug", "~> 3.9"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "webmock", "~> 3.8"
 end

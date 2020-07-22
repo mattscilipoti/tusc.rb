@@ -1,5 +1,9 @@
 # tusc.rb: Tus Client for Ruby
 
+tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io).
+
+**Supports protocol version:** 1.0.0
+
 <img alt="Tus logo" src="https://github.com/tus/tus.io/blob/master/assets/img/tus1.png?raw=true" width="30%" align="right" />
 
 > **tus** is a protocol based on HTTP for *resumable file uploads*. Resumable
@@ -7,11 +11,6 @@
 > re-uploading the previous data again. An interruption may happen willingly, if
 > the user wants to pause, or by accident in case of an network issue or server
 > outage.
-
-tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io).
-
-**Protocol version:** 1.0.0
-
 
 ## Installation
 
@@ -41,7 +40,7 @@ Or install it yourself as:
 ```
 creation_request = TusClient::CreationRequest.new(tus_creation_url: 'example.com', file_size: io.size)
 uploader = TusClient::Uploader(io, creation_request)
-uploader.start
+uploader.perform
 ```
 
 ## tus overview
@@ -59,7 +58,7 @@ If the PATCH request got interrupted or failed for another reason, the client ca
 Optionally, if the client wants to delete an upload because it won’t be needed anymore, a DELETE request can be sent to the upload URL. After this, the upload can be cleaned up by the server and resuming the upload is not possible anymore.
 
 ## TODO:
-- [ ] Basic upload
+- [X] Basic upload
 - [ ] Can pass tus_server specific/extra headers
 - [ ] Can resume failed upload
 - [ ] Supports Upload-Metadata
