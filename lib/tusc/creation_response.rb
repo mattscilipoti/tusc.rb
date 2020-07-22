@@ -4,11 +4,11 @@ class TusClient::CreationResponse
   end
 
   def body
-    @response.body
+    JSON.parse(@response.body)
   end
 
   def location
-    @response.header.fetch('Location')
+    @response.header && @response.header['Location']
   end
 
   def raw
@@ -19,7 +19,13 @@ class TusClient::CreationResponse
     @response.code.to_i
   end
 
+  def success?
+    result = status_code == 201
+    result &= (location =~ URI::ABS_URI) unless location.nil? || location.empty?
+    result
+  end
+
   def upload_uri
-    URI.parse(location)
+    URI.parse(location) unless location.empty?
   end
 end
