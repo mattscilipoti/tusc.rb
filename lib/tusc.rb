@@ -1,13 +1,12 @@
 require 'tusc/version'
 require_relative 'tusc/creation_request'
 require_relative 'tusc/uploader'
+require_relative 'core_ext/object/blank'
 require 'ougai'
-
 
 class Logger::LogDevice
   # MonkeyPatch: to disable log header
-  def add_log_header(file)
-  end
+  def add_log_header(file); end
 end
 
 module TusClient
@@ -18,13 +17,12 @@ module TusClient
 
   def self.log_dir
     log_dir = Pathname.new(File.expand_path('./log'))
-    Dir.mkdir(log_dir) unless Dir.exists?(log_dir)
+    Dir.mkdir(log_dir) unless Dir.exist?(log_dir)
     log_dir
   end
 
   def self.logger
     @logger ||= begin
-
       logger = Ougai::Logger.new(STDOUT)
       # logger = Ougai::Logger.new(log_dir.join('tusc.log'), 50 * MEGABYTE)
       logger.level = Logger::INFO
@@ -33,8 +31,8 @@ module TusClient
       error_logger.level = Logger::ERROR
       error_logger.before_log = lambda do |data|
         # find first entry in this library
-        source = caller_locations.find{|entry| entry.to_s =~ /tusc/}.to_s
-        method_name = (source =~ /`([^']*)'/ and $1).to_s
+        source = caller_locations.find { |entry| entry.to_s =~ /tusc/ }.to_s
+        method_name = (source =~ /`([^']*)'/ and Regexp.last_match(1)).to_s
         data[:source] = source
         data[:method] = method_name
       end

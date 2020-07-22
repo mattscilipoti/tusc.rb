@@ -21,11 +21,11 @@ class TusClient::CreationResponse
 
   def success?
     result = status_code == 201
-    result &= (location =~ URI::ABS_URI) unless location.nil? || location.empty?
+    result &= (location =~ URI::ABS_URI) unless location.blank?
     result
   end
 
   def upload_uri
-    URI.parse(location) unless location.empty?
+    URI.parse(location) unless location.blank?
   end
 end

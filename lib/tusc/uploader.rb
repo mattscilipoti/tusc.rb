@@ -11,19 +11,20 @@ class TusClient::Uploader
   end
 
   def self.from_file_path(file_path:, upload_url:)
-    fail ArgumentError.new("file_path is required (#{file_path})") if file_path.nil? || file_path.empty?
+    raise ArgumentError, "file_path is required (#{file_path})" if file_path.blank?
+
     file_pathname = Pathname.new(file_path)
-    fail ArgumentError.new("Passed file does NOT exist: #{file_pathname.inspect}") unless file_pathname.exist?
-    new(file_pathname.open, upload_url)
+    raise ArgumentError, "Passed file does NOT exist: #{file_pathname.inspect}" unless file_pathname.exist?
   end
 
   def initialize(io:, upload_url:)
     # fail ArgumentError.new("io must be an IO object") unless io.is_a?(IO) || io.is_a?(StringIO)
-    [:rewind, :size, :read, :close].each do |required_method|
-      fail ArgumentError.new("io must respond to ##{required_method}") unless io.respond_to?(required_method)
+    %i[rewind size read close].each do |required_method|
+      raise ArgumentError, "io must respond to ##{required_method}" unless io.respond_to?(required_method)
     end
-    fail ArgumentError.new("upload_url is required (#{upload_url})") if upload_url.nil? || upload_url.empty?
-    fail ArgumentError.new("upload_url must be a valid url (#{upload_url})") unless upload_url =~ URI::ABS_URI
+    raise ArgumentError, "upload_url is required (#{upload_url})" if upload_url.blank?
+    raise ArgumentError, "upload_url must be a valid url (#{upload_url})" unless upload_url =~ URI::ABS_URI
+
     @io = io
     @upload_url = upload_url
   end
@@ -55,7 +56,7 @@ class TusClient::Uploader
 
   def headers
     headers = {
-      'Content-Type' => self.content_type,
+      'Content-Type' => content_type,
       'Tus-Resumable' => tus_resumable_version,
       'Upload-Offset' => 0.to_s,
       'Upload-Length' => size.to_s
@@ -88,9 +89,9 @@ class TusClient::Uploader
 
     offset = self.offset
     begin
-      logger.debug { ['Reading io...', {size: size, offset: offset, chunk_size: chunk_size}] }
+      logger.debug { ['Reading io...', { size: size, offset: offset, chunk_size: chunk_size }] }
 
-      chunk = io.read(self.chunk_size, offset)
+      chunk = io.read(chunk_size, offset)
       upload_response = push_chunk(chunk, offset)
       offset = upload_response.offset
     end while offset < size && upload_response.status_code == 200
@@ -103,13 +104,12 @@ class TusClient::Uploader
     headers = self.headers.merge(push_headers)
 
     logger.debug do
-      [ "TUS PATCH",
-        sending: {
-          body: chunk.to_s.truncate_middle(50),
-          header: headers,
-          url: upload_url.to_s,
-        }
-      ]
+      ['TUS PATCH',
+       sending: {
+         body: chunk.to_s.truncate_middle(50),
+         header: headers,
+         url: upload_url.to_s
+       }]
     end
 
     response = Net::HTTP.start(
@@ -120,15 +120,14 @@ class TusClient::Uploader
       http.patch(upload_uri.path, chunk, headers)
     end
 
-    received_header = response.each_key.collect{|k| {k => response.header[k]} }
+    received_header = response.each_key.collect { |k| { k => response.header[k] } }
     logger.debug do
-      [ "TUS PATCH",
-        received: {
-          status: response.code,
-          header: received_header,
-          body: response.body.to_s.truncate_middle(60)
-        }
-      ]
+      ['TUS PATCH',
+       received: {
+         status: response.code,
+         header: received_header,
+         body: response.body.to_s.truncate_middle(60)
+       }]
     end
 
     TusClient::UploadResponse.new(response)
@@ -139,7 +138,7 @@ class TusClient::Uploader
   end
 
   def upload_incomplete
-    self.offset < self.size
+    offset < size
   end
 
   def upload_uri
