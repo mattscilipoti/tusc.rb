@@ -1,5 +1,4 @@
 require 'tusc/version'
-require 'active_support/core_ext/string/filters' # for truncate
 require 'ougai'
 
 

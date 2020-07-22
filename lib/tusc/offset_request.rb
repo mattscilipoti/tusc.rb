@@ -1,4 +1,5 @@
 require_relative 'offset_response'
+require_relative '../core_ext/string/truncate'
 
 # Asks tus server for appriopriate offset
 #  for specific file, via upload_url

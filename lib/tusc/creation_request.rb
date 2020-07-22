@@ -1,4 +1,5 @@
 require_relative 'creation_response'
+require_relative '../core_ext/string/truncate'
 
 # Sends the creation request to the tus server
 class TusClient::CreationRequest
