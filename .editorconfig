@@ -1,0 +1,26 @@
+# EditorConfig is awesome: http://EditorConfig.org
+# tldr: A single point of truth for code editor configuration
+
+# conventions
+# - sort each section by alpha
+# - assign global defaults, then indicate exceptions to those rules
+
+# top-most EditorConfig file
+root = true
+
+# Default settings
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Batch files
+[**.bat]
+end_of_line = crlf
+
+# Python
+[**.py]
+indent_size = 4
+indent_style = space
