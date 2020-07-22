@@ -1,4 +1,6 @@
 require 'tusc/version'
+require_relative 'tusc/creation_request'
+require_relative 'tusc/uploader'
 require 'ougai'
 
 
