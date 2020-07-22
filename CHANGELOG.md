@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.1.4: CreationResponse#success?, #blank?
+2020-07-22 v0.1.4: CreationResponse#success?, #blank?
 - CreationResponse: body is parsed from JSON
 - Copy/paste #blank? from Rails/ActiveSupport
 - FIX Uploader.from_file_path factory method (named args)
