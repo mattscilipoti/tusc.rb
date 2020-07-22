@@ -35,7 +35,7 @@ class TusClient::CreationRequest
       tus_creation_uri.port,
       use_ssl: tus_creation_uri.scheme == 'https'
     ) do |http|
-      http.post(tus_creation_uri.path, headers)
+      http.post(tus_creation_uri.path, nil, headers)
     end
 
     received_header = response.each_key.collect{|k| {k => response.header[k]} }
@@ -61,6 +61,6 @@ class TusClient::CreationRequest
   end
 
   def tus_creation_uri
-    URI.parse(tus_creation_url)
+    @tus_creation_uri ||= URI.parse(tus_creation_url)
   end
 end
