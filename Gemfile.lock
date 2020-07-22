@@ -40,7 +40,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.5)
-    rake (10.5.0)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -71,7 +71,7 @@ DEPENDENCIES
   amazing_print (~> 1.2)
   bundler (~> 1.17)
   pry-byebug (~> 3.9)
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
   tusc!
   webmock (~> 3.8)
