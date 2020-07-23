@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.1.6: FIX Requesting offset
-- FIX Uploader#offset_request(er)
+2020-07-22 v0.1.6: FIX Requesting offset
+- FIX: Uploader#offset_request(er)
 - OffsetRequest: accepts URL or URI
 
 2020-07-22 v0.1.5: FIX Requires, FIX #blank CONST conflicts
@@ -15,7 +15,7 @@ Upcoming v0.1.6: FIX Requesting offset
 2020-07-22 v0.1.4: CreationResponse#success?, #blank?
 - CreationResponse: body is parsed from JSON
 - Copy/paste #blank? from Rails/ActiveSupport
-- FIX Uploader.from_file_path factory method (named args)
+- FIX: Uploader.from_file_path factory method (named args)
 
 2020-07-22 v0.1.3: CreationRequest accepts :body, :extra_headers
 - i.e. Vimeo tus server requires info to be included in the request.
