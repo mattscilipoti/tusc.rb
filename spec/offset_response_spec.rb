@@ -11,4 +11,10 @@ RSpec.describe TusClient::OffsetResponse do
   it "#offset retrieves 'Upload-Offset' header" do
     expect(subject.offset).to eql(-1)
   end
+
+  it "#offset defaults to 0, if 'Upload-Offset' header does NOT exist" do
+    response_without_headers = OpenStruct.new(header: {})
+    subject = TusClient::OffsetResponse.new(response_without_headers)
+    expect(subject.offset).to eql(0)
+  end
 end

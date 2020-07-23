@@ -4,6 +4,6 @@ class TusClient::OffsetResponse
   end
 
   def offset
-    @response.header.fetch('Upload-Offset').to_i
+    @response.header['Upload-Offset'].to_i # nil.to_i == 0
   end
 end

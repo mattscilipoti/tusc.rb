@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.3.1: FIX: OffsetResponse default offset
+- OffsetResponse#offset is 0, if Upload-Offset header is not present
+
 2020-07-23 v0.3.0: FIX: content_type. Allow setting TusClient.log_level
 - debug by setting `TusClient.log_level = Logger::DEBUG`
 - reduce log rollover sizes to 1MB (200kB for testing)
