@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tusc (0.3.0)
+    tusc (0.4.0)
       mimemagic (~> 0.3)
       ougai (~> 1.8)
 
