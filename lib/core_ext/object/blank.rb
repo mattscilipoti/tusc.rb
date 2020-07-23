@@ -84,7 +84,7 @@ class Array
   #   [1,2,3].blank? # => false
   #
   # @return [true, false]
-  alias_method :blank?, :empty?
+  alias blank? empty?
 end
 
 class Hash
@@ -94,11 +94,11 @@ class Hash
   #   { key: 'value' }.blank?  # => false
   #
   # @return [true, false]
-  alias_method :blank?, :empty?
+  alias blank? empty?
 end
 
 class String
-  BLANK_RE = /\A[[:space:]]*\z/
+  BLANK_RE = /\A[[:space:]]*\z/.freeze unless defined? BLANK_RE # rails may be loaded by client
 
   # A string is blank if it's empty or contains whitespaces only:
   #
