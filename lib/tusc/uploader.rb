@@ -84,12 +84,12 @@ class TusClient::Uploader
   def perform
     # TODO: asynch?
     logger.debug { 'Starting upload...' }
-    io.rewind
 
     offset = retrieve_offset
     begin
       logger.debug { ['Reading io...', { size: size, offset: offset, chunk_size: chunk_size }] }
-      chunk = io.read(chunk_size, offset)
+      io.pos = offset
+      chunk = io.read(chunk_size)
       upload_response = push_chunk(chunk, offset)
       offset = upload_response.offset
     end while offset < size && upload_response.status_code == 200

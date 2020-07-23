@@ -27,7 +27,7 @@ RSpec.describe 'TusClient::Uploader (class methods)' do
   end
 
   describe '.new' do
-    let(:mock_file) { io = StringIO.new('abc') }
+    let(:mock_file) { StringIO.new('abc') }
     let(:upload_url) { 'https://tus.io/uploads' }
 
     it 'io is required' do
@@ -66,7 +66,7 @@ RSpec.describe TusClient::Uploader do
     )
   end
 
-  let(:mock_file) { io = StringIO.new('abc') }
+  let(:mock_file) { StringIO.new('abc') }
   let(:upload_url) { 'https://tus.io/uploads' }
 
   describe '#content_type' do
@@ -168,21 +168,7 @@ RSpec.describe TusClient::Uploader do
       end
 
       let(:mock_chunk_size) { 1 }
-      let(:mock_file_contents) { 'abc' }
-      let(:mock_file_size) { mock_file_contents.size }
-
-      let(:mock_file) do
-        instance_double('File').tap do |io|
-          allow(io).to receive(:rewind)
-          allow(io).to receive(:size).and_return(3) # size of mock_file_contents
-          # webmock returns an incrementing Upload-Offset
-          allow(io).to receive(:read).with(1, 0).and_return('a')
-          allow(io).to receive(:read).with(1, 1).and_return('b')
-          allow(io).to receive(:read).with(1, 2).and_return('c')
-          expect(io).to receive(:close)
-        end
-      end
-
+      let(:mock_file) { StringIO.new('abc') }
       let(:upload_url) { 'https://tus.example.com/uploads' }
 
       subject(:uploader) do
@@ -200,12 +186,7 @@ RSpec.describe TusClient::Uploader do
         response = uploader.perform
         expect(response).to be_a(TusClient::UploadResponse)
         expect(response.status_code).to eql(204) # No Content
-        expect(response.offset).to eql(mock_file_size)
-      end
-
-      it 'rewinds the file' do
-        expect(mock_file).to receive(:rewind)
-        uploader.perform
+        expect(response.offset).to eql(mock_file.size)
       end
 
       it 'uploads the file one chunk at a time' do
@@ -231,12 +212,7 @@ RSpec.describe TusClient::Uploader do
       { 'Passed-Header' => 'has been included' }
     end
 
-    let(:mock_file) do
-      instance_double('File', size: 3, read: 'abc').tap do |mock_file|
-        allow(mock_file).to receive(:rewind)
-        allow(mock_file).to receive(:close)
-      end
-    end
+    let(:mock_file) { StringIO.new('abc') }
 
     subject(:uploader) do
       TusClient::Uploader.new(

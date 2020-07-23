@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.4.1: FIX: Upload#perform seeks correct offset.
+
 2020-07-23 v0.4.0: FIX: OffsetResponse default offset, Uploader#content_type
 - FIX: OffsetResponse#offset is 0, if Upload-Offset header is not present
 - Uploader#content_type detects or uses default
