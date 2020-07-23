@@ -49,7 +49,7 @@ class TusClient::Uploader
   end
 
   def content_type
-    @content_type ||= detect_content_type
+    @content_type ||= detect_content_type || default_content_type
   end
 
   def default_content_type
@@ -58,7 +58,7 @@ class TusClient::Uploader
 
   def detect_content_type
     found_content_type = MimeMagic.by_magic(io)
-    found_content_type ? found_content_type.type : default_content_type
+    found_content_type&.type
   end
 
   def headers
