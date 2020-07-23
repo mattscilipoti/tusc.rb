@@ -22,13 +22,22 @@ module TusClient
     log_dir
   end
 
+  def self.log_level
+    @log_level ||= Logger::ERROR
+  end
+
+  def self.log_level=(value)
+    @logger = nil # invalidate cache
+    @log_level = value
+  end
+
   def self.logger
     @logger ||= begin
-      logger = Ougai::Logger.new(STDOUT)
-      # logger = Ougai::Logger.new(log_dir.join('tusc.log'), 50 * MEGABYTE)
-      logger.level = Logger::INFO
+      # logger = Ougai::Logger.new(STDOUT)
+      logger = Ougai::Logger.new(log_dir.join('tusc.log'), 1, 1 * MEGABYTE)
+      logger.level = log_level
 
-      error_logger = Ougai::Logger.new(log_dir.join('tusc_error.log'), 10 * MEGABYTE)
+      error_logger = Ougai::Logger.new(log_dir.join('tusc_error.log'), 1, 1 * MEGABYTE)
       error_logger.level = Logger::ERROR
       error_logger.before_log = lambda do |data|
         # find first entry in this library

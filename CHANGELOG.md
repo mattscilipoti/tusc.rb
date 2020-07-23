@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.3.0: Allow setting TusClient.log_level
+- debug by setting `TusClient.log_level = Logger::DEBUG`
+- reduce log rollover sizes to 1MB (200kB for testing)
+
 2020-07-22 v0.2.0: Uploader & OffsetRequest accept extra_headers
 - Uploader passes extra_headers to OffsetRequest
 

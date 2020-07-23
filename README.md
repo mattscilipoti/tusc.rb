@@ -28,7 +28,6 @@ Or install it yourself as:
 
     $ gem install tusc
 
-
 ## Usage
 
 - Perform a CreationRequest
@@ -36,12 +35,30 @@ Or install it yourself as:
   - IO object (file)
   - upload creation request, provided by the tus server
 - Start the upload
-- e.g.
+
+### Example
+
 ```
-creation_request = TusClient::CreationRequest.new(tus_creation_url: 'example.com', file_size: io.size)
-uploader = TusClient::Uploader(io, creation_request)
-uploader.perform
+File.open('path/to/file') do |file|
+  creation_request = TusClient::CreationRequest.new(
+    tus_creation_url: 'https://example.com',
+    file_size: fiile.size
+  )
+  creation_response = creation_request.perform
+  uploader = TusClient::Uploader.new(
+    io: file,
+    upload_url: creation_response.upload_url
+  )
+  uploader.perform
+end
 ```
+
+## Logging
+
+We log to `log/tusc.log`.
+
+- You can adjust verbosity by setting `TusClient.log_level`
+- It defaults to `Logger::ERROR`
 
 ## tus overview
 
