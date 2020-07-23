@@ -4,14 +4,19 @@ require_relative '../core_ext/string/truncate'
 # Asks tus server for appriopriate offset
 #  for specific file, via upload_url
 class TusClient::OffsetRequest
-  attr_reader :upload_url
+  attr_reader :upload_uri
   def initialize(upload_url:)
-    @upload_url = upload_url
+    upload_uri = upload_url.is_a?(URI) ? upload_url : URI.parse(upload_url)
+    unless upload_uri.is_a?(URI::HTTP) && !upload_uri.host.nil?
+      raise URI::InvalidURIError, "Could NOT parse host from #{upload_url.inspect}"
+    end
+
+    @upload_uri = upload_uri
   end
 
   def headers
     {
-      'Tus-Resumable' => supported_tus_resumable_version,
+      'Tus-Resumable' => supported_tus_resumable_version
     }
   end
 
@@ -23,9 +28,8 @@ class TusClient::OffsetRequest
   # Returns the offset (in a OffsetResponse)
   def perform
     logger.debug do
-      [ 'TUS HEAD',
-        sending: { upload_url: upload_uri, header: headers }
-      ]
+      ['TUS HEAD',
+       sending: { upload_url: upload_uri, header: headers }]
     end
 
     response = Net::HTTP.start(
@@ -35,16 +39,15 @@ class TusClient::OffsetRequest
     ) do |http|
       http.head(upload_uri.path, headers)
     end
-    received_header = response.each_key.collect{|k| {k => response.header[k]} }
+    received_header = response.each_key.collect { |k| { k => response.header[k] } }
 
     logger.debug do
-      [ "TUS HEAD",
-        received: {
-          status: response.code,
-          header: received_header,
-          body: response.body.to_s.truncate_middle(60)
-        }
-      ]
+      ['TUS HEAD',
+       received: {
+         status: response.code,
+         header: received_header,
+         body: response.body.to_s.truncate_middle(60)
+       }]
     end
 
     TusClient::OffsetResponse.new(response)
@@ -56,9 +59,5 @@ class TusClient::OffsetRequest
 
   def supported_tus_resumable_version
     '1.0.0'
-  end
-
-  def upload_uri
-    URI.parse(upload_url)
   end
 end

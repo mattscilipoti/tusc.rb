@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Upcoming v0.1.6: FIX Requesting offset
 - FIX Uploader#offset_request(er)
+- OffsetRequest: accepts URL or URI
 
 2020-07-22 v0.1.5: FIX Requires, FIX #blank CONST conflicts
 - FIX: Uploader requires OffsetRequest
