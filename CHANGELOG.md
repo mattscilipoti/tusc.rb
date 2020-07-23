@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.1.5: Requires, #blank CONST conflicts
-- Uploader requires OffsetRequest
-- #blank no longer creates BLANK_RE const if rails already has (via client)
+2020-07-22 v0.1.5: FIX Requires, FIX #blank CONST conflicts
+- FIX: Uploader requires OffsetRequest
+- FIX: #blank no longer creates BLANK_RE const if rails already has (via client)
 
 2020-07-22 v0.1.4: CreationResponse#success?, #blank?
 - CreationResponse: body is parsed from JSON
