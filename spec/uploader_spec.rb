@@ -91,6 +91,17 @@ RSpec.describe TusClient::Uploader do
       end
     end
 
+    describe '#offset_requester' do
+      it 'returns an new OffsetRequester' do
+        expect(uploader.offset_requester).to be_a(TusClient::OffsetRequest)
+      end
+
+      it 'returns an new OffsetRequester, using upload_url' do
+        request = uploader.offset_requester
+        expect(request.upload_uri.to_s).to eql(uploader.upload_url)
+      end
+    end
+
     describe '#perform (mocked)' do
       # Setup a mock file with 3 characters, chunk_size==1
       # Mock tus server responses
@@ -139,7 +150,7 @@ RSpec.describe TusClient::Uploader do
         ).tap do |uploader|
           allow(uploader).to receive(:chunk_size).and_return(mock_chunk_size)
           allow(uploader).to receive(:content_type).and_return(uploader.default_content_type)
-          allow(uploader).to receive(:offset).and_return(0)
+          allow(uploader).to receive(:retrieve_offset).and_return(0)
         end
       end
 
@@ -158,6 +169,18 @@ RSpec.describe TusClient::Uploader do
       it 'uploads the file one chunk at a time' do
         expect(subject).to receive(:push_chunk).exactly(3).times.and_call_original
         uploader.perform
+      end
+    end
+
+    describe '#retrieve_offset' do
+      before(:each) do
+        # Mock the tus server
+        stub_request(:head, upload_url)
+          .to_return(headers: { 'Upload-Offset' => '123' })
+      end
+
+      it 'requests offset from tus server' do
+        expect(subject.retrieve_offset).to eql(123)
       end
     end
   end

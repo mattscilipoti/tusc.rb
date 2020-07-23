@@ -70,16 +70,8 @@ class TusClient::Uploader
     @logger ||= TusClient.logger.child(library: [self.class.name])
   end
 
-  def offset
-    offset_requester.perform.offset
-  end
-
   def offset_requester
-    @offset_requester ||= TusClient::OffsetRequester.new(upload_uri)
-  end
-
-  def size
-    @size ||= io.size
+    @offset_requester ||= TusClient::OffsetRequest.new(upload_url: upload_uri)
   end
 
   # Performs the upload, one chunk at a time
@@ -90,7 +82,7 @@ class TusClient::Uploader
     logger.debug { 'Starting upload...' }
     io.rewind
 
-    offset = self.offset
+    offset = retrieve_offset
     begin
       logger.debug { ['Reading io...', { size: size, offset: offset, chunk_size: chunk_size }] }
 
@@ -136,12 +128,20 @@ class TusClient::Uploader
     TusClient::UploadResponse.new(response)
   end
 
+  def retrieve_offset
+    offset_requester.perform.offset
+  end
+
+  def size
+    @size ||= io.size
+  end
+
   def tus_resumable_version
     '1.0.0'
   end
 
   def upload_incomplete
-    offset < size
+    retrieve_offset < size
   end
 
   def upload_uri
