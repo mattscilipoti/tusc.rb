@@ -1,6 +1,7 @@
 require 'mimemagic'
 require_relative '../core_ext/string/truncate'
 require_relative 'upload_response'
+require_relative 'offset_request'
 
 # Uploads a file to a tus server
 class TusClient::Uploader
