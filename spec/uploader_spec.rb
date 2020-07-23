@@ -70,10 +70,26 @@ RSpec.describe TusClient::Uploader do
     let(:mock_file) { io = StringIO.new('abc') }
     let(:upload_url) { 'https://tus.io/uploads' }
 
-    describe '#get_content_type' do
+    describe '#detect_content_type' do
       it 'uses MimeMagic' do
         expect(MimeMagic).to receive(:by_magic).with(subject.io)
-        subject.get_content_type
+        subject.detect_content_type
+      end
+
+      it 'retrieves appropriate content_type, using MimeMagic' do
+        uploader = TusClient::Uploader.from_file_path(
+          file_path: File.expand_path('bin/console'), # ruby file
+          upload_url: 'https://example.com'
+        )
+        expect(uploader.detect_content_type).to eql('application/x-ruby')
+      end
+
+      it 'returns default content_type, if MimeMagic cannot identify' do
+        uploader = TusClient::Uploader.new(
+          io: StringIO.new('unknown type'),
+          upload_url: 'https://example.com'
+        )
+        expect(uploader.detect_content_type).to eql(TusClient::Uploader.default_content_type)
       end
     end
 

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Upcoming v0.3.0: Allow setting TusClient.log_level
 - debug by setting `TusClient.log_level = Logger::DEBUG`
 - reduce log rollover sizes to 1MB (200kB for testing)
+- FIX: Get appropriate field from MimeMagic or return default type
 
 2020-07-22 v0.2.0: Uploader & OffsetRequest accept extra_headers
 - Uploader passes extra_headers to OffsetRequest

@@ -11,6 +11,10 @@ class TusClient::Uploader
     10 * TusClient::MEGABYTE
   end
 
+  def self.default_content_type
+    'application/offset+octet-stream'
+  end
+
   def self.from_file_path(file_path:, upload_url:, extra_headers: {})
     raise ArgumentError, "file_path is required (#{file_path})" if file_path.blank?
 
@@ -45,21 +49,20 @@ class TusClient::Uploader
   end
 
   def content_type
-    @content_type ||= get_content_type
+    @content_type ||= detect_content_type
   end
 
   def default_content_type
-    'application/offset+octet-stream'
+    self.class.default_content_type
   end
 
-  def get_content_type
-    @content_type ||= begin
-      MimeMagic.by_magic(io) || default_content_type
-    end
+  def detect_content_type
+    found_content_type = MimeMagic.by_magic(io)
+    found_content_type ? found_content_type.type : default_content_type
   end
 
   def headers
-    headers = {
+    {
       'Content-Type' => content_type,
       'Tus-Resumable' => tus_resumable_version,
       'Upload-Offset' => 0.to_s,
