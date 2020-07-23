@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.4.2: FIX: Uploader#push_chunk had error logging (truncated) body
+
 2020-07-23 v0.4.1: FIX: Upload#perform seeks correct offset.
 
 2020-07-23 v0.4.0: FIX: OffsetResponse default offset, Uploader#content_type

@@ -104,7 +104,11 @@ class TusClient::Uploader
     logger.debug do
       ['TUS PATCH',
        sending: {
-         body: chunk.to_s.truncate_middle(50),
+         # WORKAROUND: receiving error truncating body
+         # *** Encoding::CompatibilityError Exception: incompatible character encodings: UTF-8 and ASCII-8BIT
+         # For the test file, it works for truncate_middle(12)
+         #  but not truncate_middle(13)
+         # body: chunk.to_s.truncate_middle(50),
          header: headers,
          url: upload_url.to_s
        }]
