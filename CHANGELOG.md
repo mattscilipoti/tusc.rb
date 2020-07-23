@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.1.7: Uploader & OffsetRequest accept extra_headers
+2020-07-22 v0.2.0: Uploader & OffsetRequest accept extra_headers
 - Uploader passes extra_headers to OffsetRequest
 
 2020-07-22 v0.1.6: FIX Requesting offset
