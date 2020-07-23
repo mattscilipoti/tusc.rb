@@ -59,5 +59,30 @@ RSpec.describe TusClient::OffsetRequest do
     it 'returns a OffsetResponse with provided offset' do
       expect(subject.perform.offset).to eql(expected_offset)
     end
+
+    context '(with passed headers)' do
+      before(:each) do
+        stub_request(:head, upload_url)
+          .with(headers: headers)
+          .to_return(headers: { 'Upload-Offset': 234 })
+      end
+
+      let(:headers) do
+        { 'passed_header' => 'has been included' }
+      end
+
+      subject(:request) do
+        TusClient::OffsetRequest.new(
+          upload_url: upload_url,
+          extra_headers: headers
+        )
+      end
+
+      it 'passes the headers to http call' do
+        # checked by the stub_request above
+        response = subject.perform
+        expect(response.offset).to eql(234)
+      end
+    end
   end
 end

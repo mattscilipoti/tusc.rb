@@ -5,22 +5,22 @@ require_relative 'offset_request'
 
 # Uploads a file to a tus server
 class TusClient::Uploader
-  attr_reader :io, :upload_url
+  attr_reader :extra_headers, :io, :upload_url
 
   def self.chunk_size
     10 * TusClient::MEGABYTE
   end
 
-  def self.from_file_path(file_path:, upload_url:)
+  def self.from_file_path(file_path:, upload_url:, extra_headers: {})
     raise ArgumentError, "file_path is required (#{file_path})" if file_path.blank?
 
     file_pathname = Pathname.new(file_path)
     raise ArgumentError, "Passed file does NOT exist: #{file_pathname.inspect}" unless file_pathname.exist?
 
-    new(io: file_pathname.open, upload_url: upload_url)
+    new(io: file_pathname.open, upload_url: upload_url, extra_headers: extra_headers)
   end
 
-  def initialize(io:, upload_url:)
+  def initialize(io:, upload_url:, extra_headers: {})
     # fail ArgumentError.new("io must be an IO object") unless io.is_a?(IO) || io.is_a?(StringIO)
     %i[rewind size read close].each do |required_method|
       raise ArgumentError, "io must respond to ##{required_method}" unless io.respond_to?(required_method)
@@ -30,6 +30,7 @@ class TusClient::Uploader
 
     @io = io
     @upload_url = upload_url
+    @extra_headers = extra_headers
   end
 
   # Optionally, if the client wants to delete an upload because it won’t be needed anymore,
@@ -63,7 +64,7 @@ class TusClient::Uploader
       'Tus-Resumable' => tus_resumable_version,
       'Upload-Offset' => 0.to_s,
       'Upload-Length' => size.to_s
-    }
+    }.merge(extra_headers)
   end
 
   def logger
@@ -71,7 +72,7 @@ class TusClient::Uploader
   end
 
   def offset_requester
-    @offset_requester ||= TusClient::OffsetRequest.new(upload_url: upload_uri)
+    @offset_requester ||= TusClient::OffsetRequest.new(upload_url: upload_uri, extra_headers: extra_headers)
   end
 
   # Performs the upload, one chunk at a time
@@ -85,7 +86,6 @@ class TusClient::Uploader
     offset = retrieve_offset
     begin
       logger.debug { ['Reading io...', { size: size, offset: offset, chunk_size: chunk_size }] }
-
       chunk = io.read(chunk_size, offset)
       upload_response = push_chunk(chunk, offset)
       offset = upload_response.offset

@@ -183,5 +183,52 @@ RSpec.describe TusClient::Uploader do
         expect(subject.retrieve_offset).to eql(123)
       end
     end
+
+    context '(with passed headers)' do
+      before(:each) do
+        # Mock the tus server
+        stub_request(:head, upload_url)
+          .with(headers: headers)
+          .to_return(headers: { 'Upload-Offset' => '234' })
+
+        stub_request(:patch, upload_url)
+          .with(headers: headers)
+          .to_return(headers: { 'Upload-Offset' => '345' })
+      end
+
+      let(:headers) do
+        { 'Passed-Header' => 'has been included' }
+      end
+
+      let(:mock_file) do
+        instance_double('File', size: 3, read: 'abc').tap do |mock_file|
+          allow(mock_file).to receive(:rewind)
+          allow(mock_file).to receive(:close)
+        end
+      end
+
+      subject(:uploader) do
+        TusClient::Uploader.new(
+          io: mock_file,
+          upload_url: upload_url,
+          extra_headers: headers
+        ).tap do |uploader|
+          allow(uploader).to receive(:chunk_size).and_return(3)
+          allow(uploader).to receive(:content_type).and_return(uploader.default_content_type)
+        end
+      end
+
+      it '#perform passes the headers to http call' do
+        # checked by the stub_request above
+        response = subject.perform
+        expect(response.offset).to eql(345)
+      end
+
+      it '#retrieve_offset passes the headers to http call' do
+        # checked by the stub_request above
+        response = subject.retrieve_offset
+        expect(response).to eql(234)
+      end
+    end
   end
 end
