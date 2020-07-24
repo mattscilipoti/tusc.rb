@@ -57,10 +57,11 @@ end
 
 ## Logging
 
-We log to `log/tusc.log`.
-
+We log to `log/tusc.log`, in JSON format.
 - You can adjust verbosity by setting `TusClient.log_level`
 - It defaults to `Logger::ERROR`
+
+> Tip: "bunyan" is good tool for viewing "pretty" formatted logs. Note: we're recommend [the CLI](https://github.com/trentm/node-bunyan#installation), not the nodejs library.
 
 ## tus overview
 
@@ -82,7 +83,6 @@ Optionally, if the client wants to delete an upload because it won’t be needed
 - [ ] Can resume failed upload
 - [ ] Supports Upload-Metadata
 - [ ] Supports Upload-Defer-Length
-
 
 ## Development
 
