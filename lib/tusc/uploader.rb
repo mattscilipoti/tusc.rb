@@ -1,3 +1,4 @@
+require 'net/http'
 require_relative '../core_ext/string/truncate'
 require_relative 'upload_response'
 require_relative 'offset_request'
@@ -25,7 +26,7 @@ class TusClient::Uploader
 
   def initialize(io:, upload_url:, extra_headers: {})
     # fail ArgumentError.new("io must be an IO object") unless io.is_a?(IO) || io.is_a?(StringIO)
-    %i[rewind size read close].each do |required_method|
+    %i[size read close].each do |required_method|
       raise ArgumentError, "io must respond to ##{required_method}" unless io.respond_to?(required_method)
     end
     raise ArgumentError, "upload_url is required (#{upload_url})" if upload_url.blank?
@@ -62,8 +63,7 @@ class TusClient::Uploader
     {
       'Content-Type' => content_type,
       'Tus-Resumable' => tus_resumable_version,
-      'Upload-Offset' => 0.to_s,
-      'Upload-Length' => size.to_s
+      'Upload-Offset' => 0.to_s
     }.merge(extra_headers)
   end
 
@@ -90,12 +90,15 @@ class TusClient::Uploader
       upload_response = push_chunk(chunk, offset)
       offset = upload_response.offset
     end while offset < size && upload_response.status_code == 200
+
     io.close
     upload_response
   end
 
   def push_chunk(chunk, offset)
-    push_headers = { 'Upload-Offset' => offset.to_s }
+    push_headers = {
+      'Upload-Offset' => offset.to_s
+    }
     headers = self.headers.merge(push_headers)
 
     logger.debug do
@@ -149,7 +152,7 @@ class TusClient::Uploader
   end
 
   def upload_uri
-    URI.parse(upload_url)
+    @upload_uri ||= URI.parse(upload_url)
   end
 
   def video_url

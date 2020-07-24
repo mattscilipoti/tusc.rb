@@ -3,11 +3,11 @@ require_relative '../lib/tusc/upload_response'
 
 RSpec.describe TusClient::UploadResponse do
   let(:complete_response) do
-    OpenStruct.new(code: 204, header: {'Upload-Offset' => '-100'})
+    OpenStruct.new(code: 204, header: { 'Upload-Offset' => '-100' })
   end
 
   let(:incomplete_response) do
-    OpenStruct.new(code: 200, header: {'Upload-Offset' => '-1'})
+    OpenStruct.new(code: 200, header: { 'Upload-Offset' => '-1' })
   end
 
   context '(incomplete upload)' do

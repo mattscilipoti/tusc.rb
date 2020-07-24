@@ -1,3 +1,4 @@
+require 'net/http'
 require_relative 'creation_response'
 require_relative '../core_ext/string/truncate'
 

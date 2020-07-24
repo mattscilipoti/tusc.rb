@@ -1,3 +1,4 @@
+require 'net/http'
 require_relative 'offset_response'
 require_relative '../core_ext/string/truncate'
 
