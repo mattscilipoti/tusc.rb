@@ -132,7 +132,7 @@ class TusClient::Uploader
        }]
     end
 
-    TusClient::UploadResponse.new(response)
+    TusClient::UploadResponse.new(response, io.size)
   end
 
   def retrieve_offset

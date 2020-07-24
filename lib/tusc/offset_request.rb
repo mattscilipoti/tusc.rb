@@ -55,10 +55,6 @@ class TusClient::OffsetRequest
     TusClient::OffsetResponse.new(response)
   end
 
-  def success?
-    # @upload_response.
-  end
-
   def supported_tus_resumable_version
     '1.0.0'
   end

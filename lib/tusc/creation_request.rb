@@ -53,10 +53,6 @@ class TusClient::CreationRequest
     TusClient::CreationResponse.new(response)
   end
 
-  def success?
-    # @upload_response.
-  end
-
   def supported_tus_resumable_versions
     ['1.0.0']
   end

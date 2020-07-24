@@ -1,4 +1,6 @@
 require 'spec_helper'
+require_relative 'shared_examples/shared_examples_for_responses'
+
 require_relative '../lib/tusc/creation_response'
 
 RSpec.describe TusClient::CreationResponse do
@@ -8,6 +10,8 @@ RSpec.describe TusClient::CreationResponse do
     end
 
     subject(:response) { TusClient::CreationResponse.new(success_response) }
+
+    it_behaves_like 'all response objects'
 
     it "#upload_url retrieves 'Location' header" do
       expect(subject.upload_uri.to_s).to eql('https://success.example.com')
@@ -31,6 +35,10 @@ RSpec.describe TusClient::CreationResponse do
 
     it '#upload_uri is nil' do
       expect(subject.upload_uri).to be_nil
+    end
+
+    it 'should be #success?' do
+      expect(subject).to be_success
     end
   end
 
