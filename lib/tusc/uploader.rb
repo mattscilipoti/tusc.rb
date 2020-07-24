@@ -1,4 +1,3 @@
-require 'mimemagic'
 require_relative '../core_ext/string/truncate'
 require_relative 'upload_response'
 require_relative 'offset_request'
@@ -49,16 +48,14 @@ class TusClient::Uploader
   end
 
   def content_type
-    @content_type ||= detect_content_type || default_content_type
+    # We used to detect content type, using MimeMagic,
+    #  but the videos only uploaded if we used the default (octet-stream)
+    #  So... we just use the default
+    default_content_type
   end
 
   def default_content_type
     self.class.default_content_type
-  end
-
-  def detect_content_type
-    found_content_type = MimeMagic.by_magic(io)
-    found_content_type&.type
   end
 
   def headers

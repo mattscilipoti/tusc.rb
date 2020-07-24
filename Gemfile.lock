@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     tusc (0.4.2)
-      mimemagic (~> 0.3)
       ougai (~> 1.8)
 
 GEM
@@ -19,7 +18,6 @@ GEM
     diff-lcs (1.4.4)
     hashdiff (1.0.1)
     method_source (1.0.0)
-    mimemagic (0.3.5)
     oj (3.10.7)
     ougai (1.8.5)
       oj (~> 3.10)

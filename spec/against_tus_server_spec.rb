@@ -91,5 +91,29 @@ RSpec.describe 'TusClient: uploading to a tus server' do
 
       it_behaves_like 'uploading a file'
     end
+
+    context '(video file, via Uploader.from_file_path)' do
+      let(:test_file_name_and_path) do
+        File.expand_path(File.join('spec', 'fixtures', 'test_video.m4v'))
+      end
+
+      subject(:uploader) do
+        creator = TusClient::CreationRequest.new(
+          file_size: File.size(test_file_name_and_path),
+          tus_creation_url: tus_server_uri.to_s
+        )
+
+        creation_response = creator.perform
+
+        new_file_uri = creation_response.upload_uri
+
+        TusClient::Uploader.from_file_path(
+          file_path: test_file_name_and_path,
+          upload_url: new_file_uri.to_s
+        )
+      end
+
+      it_behaves_like 'uploading a file'
+    end
   end
 end

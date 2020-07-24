@@ -72,39 +72,8 @@ RSpec.describe TusClient::Uploader do
   let(:upload_url) { 'https://tus.io/uploads' }
 
   describe '#content_type' do
-    it 'detects type from io' do
-      expect(subject).to receive(:detect_content_type).and_return('detected_type')
-
-      expect(subject.content_type).to eql('detected_type')
-    end
-
-    it 'falls back to default (octet-stream)' do
-      expect(subject).to receive(:detect_content_type).and_return(nil)
-
+    it 'is always octet-stream' do
       expect(subject.content_type).to eql(subject.default_content_type)
-    end
-  end
-
-  describe '#detect_content_type' do
-    it 'uses MimeMagic' do
-      expect(MimeMagic).to receive(:by_magic).with(subject.io)
-      subject.detect_content_type
-    end
-
-    it 'retrieves appropriate content_type, using MimeMagic' do
-      uploader = TusClient::Uploader.from_file_path(
-        file_path: File.expand_path('bin/console'), # ruby file
-        upload_url: 'https://example.com'
-      )
-      expect(uploader.detect_content_type).to eql('application/x-ruby')
-    end
-
-    it 'returns nil, if MimeMagic cannot identify' do
-      uploader = TusClient::Uploader.new(
-        io: StringIO.new('unknown type'),
-        upload_url: 'https://example.com'
-      )
-      expect(uploader.detect_content_type).to be_nil
     end
   end
 

@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.4.3: Testing via tus-server.
+Upcoming v0.4.3: FIX: Can upload video files. Testing via tus-server.
+- Added tests against local tus-server
+- FIX: Uploader now supports uploading video files (using octet-stream vs. detected content type)
+  - removes dependency on MimeMagic
 
 2020-07-23 v0.4.2: FIX: Uploader#push_chunk had error logging (truncated) body
 
