@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'webmock/rspec'
 require_relative '../lib/tusc/creation_request'
 
-WebMock.disable_net_connect!
+WebMock.disable_net_connect!(allow_localhost: true) # tus-server is on localhost
 
 RSpec.describe TusClient::CreationRequest do
   subject(:request) do

@@ -36,18 +36,20 @@ Or install it yourself as:
   - upload creation request, provided by the tus server
 - Start the upload
 
+> We recommend reviewing the specs in `spec/against_tus_server_spec.rb`. There are examples of uploading files (e.g. text, video).
+
 ### Example
 
 ```
 File.open('path/to/file') do |file|
   creation_request = TusClient::CreationRequest.new(
     tus_creation_url: 'https://example.com',
-    file_size: fiile.size
+    file_size: file.size
   )
   creation_response = creation_request.perform
   uploader = TusClient::Uploader.new(
     io: file,
-    upload_url: creation_response.upload_url
+    upload_url: creation_response.upload_url.to_s
   )
   uploader.perform
 end
@@ -76,7 +78,7 @@ Optionally, if the client wants to delete an upload because it won’t be needed
 
 ## TODO:
 - [X] Basic upload
-- [ ] Can pass tus_server specific/extra headers
+- [X] Can pass tus_server specific/extra headers (like Vimeo requires)
 - [ ] Can resume failed upload
 - [ ] Supports Upload-Metadata
 - [ ] Supports Upload-Defer-Length
@@ -87,6 +89,11 @@ Optionally, if the client wants to delete an upload because it won’t be needed
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Testing
+
+We use rspec, so everything is under `spec/` directory.
+Files used for testing are in `spec/fixtures`.
 
 ## Contributing
 

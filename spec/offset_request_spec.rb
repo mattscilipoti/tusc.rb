@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'webmock/rspec'
 require_relative '../lib/tusc/offset_request'
 
-WebMock.disable_net_connect!
+WebMock.disable_net_connect!(allow_localhost: true) # tus-server is on localhost
 
 RSpec.describe 'TusClient::OffsetRequest (constructor)' do
   it 'converts upload_url to upload_uri (as URI)' do

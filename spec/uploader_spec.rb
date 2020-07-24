@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'webmock/rspec'
 require_relative '../lib/tusc/uploader'
 
+WebMock.disable_net_connect!(allow_localhost: true) # tus-server is on locahost
+
 RSpec.describe 'TusClient::Uploader (class methods)' do
   describe '.from_file_path (factory method)' do
     it 'creates new Uploader with File object' do
