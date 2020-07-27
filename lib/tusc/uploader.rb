@@ -89,7 +89,7 @@ class TusClient::Uploader
       chunk = io.read(chunk_size)
       upload_response = push_chunk(chunk, offset)
       offset = upload_response.offset
-    end while offset < size && upload_response.status_code == 200
+    end while offset < size && [200, 204].include?(upload_response.status_code)
 
     io.close
     upload_response

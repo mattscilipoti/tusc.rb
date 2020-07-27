@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'digest' # for checksums
 require_relative '../lib/tusc'
 
-RSpec.describe 'TusClient: uploading to a tus server' do
+RSpec.describe 'TusClient: uploading to a local tus server' do
   tus_server_storage_dir = Pathname('./data') # default for tus-server gem
   tus_server_uri = URI.parse('http://localhost:9292/files') # started manually, via rackup
 
@@ -111,6 +111,35 @@ RSpec.describe 'TusClient: uploading to a tus server' do
           file_path: test_file_name_and_path,
           upload_url: new_file_uri.to_s
         )
+      end
+
+      it_behaves_like 'uploading a file'
+    end
+
+    context '(video file, chunk size is much smaller than video)' do
+      let(:test_file_name_and_path) do
+        File.expand_path(File.join('spec', 'fixtures', 'test_video.m4v'))
+      end
+
+      subject(:uploader) do
+        file_size = File.size(test_file_name_and_path)
+        allow(TusClient::Uploader).to receive(:chunk_size).and_return((file_size / 10).floor)
+        creator = TusClient::CreationRequest.new(
+          file_size: file_size,
+          tus_creation_url: tus_server_uri.to_s
+        )
+
+        creation_response = creator.perform
+
+        new_file_uri = creation_response.upload_uri
+
+        TusClient::Uploader.from_file_path(
+          file_path: test_file_name_and_path,
+          upload_url: new_file_uri.to_s
+        ).tap do |uploader|
+          # verify we upload 10 chunks + 1 partial
+          expect(uploader).to receive(:push_chunk).exactly(10 + 1).times.and_call_original
+        end
       end
 
       it_behaves_like 'uploading a file'

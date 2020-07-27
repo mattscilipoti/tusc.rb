@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.4.4: FIX: some tus servers return 200 (vs. 204) for upload request
+
 2020-07-24 v0.4.3: FIX: Can upload video files. Testing via tus-server.
 - Added tests against local tus-server
 - FIX: Uploader now supports uploading video files (using octet-stream vs. detected content type)
