@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tusc (0.4.4)
+    tusc (0.4.5)
       ougai (~> 1.8)
 
 GEM
@@ -18,7 +18,7 @@ GEM
     diff-lcs (1.4.4)
     hashdiff (1.0.1)
     method_source (1.0.0)
-    oj (3.10.7)
+    oj (3.10.8)
     ougai (1.8.5)
       oj (~> 3.10)
     pry (0.13.1)
