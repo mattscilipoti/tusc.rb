@@ -1,5 +1,6 @@
 require 'net/http'
 require_relative '../core_ext/string/truncate'
+require_relative 'upload_request'
 require_relative 'upload_response'
 require_relative 'offset_request'
 
@@ -88,14 +89,23 @@ class TusClient::Uploader
       io.pos = offset
       chunk = io.read(chunk_size)
       upload_response = push_chunk(chunk, offset)
+      unless upload_response.success?
+        raise "Issue uploading file: #{{ code: upload_response.status_code, message: upload_response.body }}."
+      end
+
       offset = upload_response.offset
-    end while offset < size && [200, 204].include?(upload_response.status_code)
+    end while upload_response.success? && upload_response.incomplete?
 
     io.close
     upload_response
   end
 
   def push_chunk(chunk, offset)
+    # push_chunk_directly(chunk, offset)
+    push_chunk_via_upload_request(chunk, offset)
+  end
+
+  def push_chunk_directly(chunk, offset)
     push_headers = {
       'Upload-Offset' => offset.to_s
     }
@@ -109,6 +119,7 @@ class TusClient::Uploader
          # For the test file, it works for truncate_middle(12)
          #  but not truncate_middle(13)
          # body: chunk.to_s.truncate_middle(50),
+         body_md5: Digest::MD5.hexdigest(chunk),
          header: headers,
          url: upload_url.to_s
        }]
@@ -133,6 +144,17 @@ class TusClient::Uploader
     end
 
     TusClient::UploadResponse.new(response, io.size)
+  end
+
+  def push_chunk_via_upload_request(chunk, offset)
+    upload_request = TusClient::UploadRequest.new(
+      upload_uri: upload_url,
+      chunk_to_upload: chunk,
+      offset: offset,
+      file_size: size,
+      extra_headers: extra_headers
+    )
+    upload_request.perform
   end
 
   def retrieve_offset

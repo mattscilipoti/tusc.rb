@@ -5,8 +5,16 @@ class TusClient::UploadResponse
     @file_size = file_size
   end
 
+  def body
+    @response.body
+  end
+
+  def complete?
+    offset >= file_size
+  end
+
   def incomplete?
-    status_code == 200 && (offset < file_size)
+    offset < file_size
   end
 
   def offset
@@ -21,7 +29,11 @@ class TusClient::UploadResponse
     @response.code.to_i
   end
 
+  def successful_status_codes
+    [200, 204]
+  end
+
   def success?
-    status_code == 204 && (offset >= 0)
+    successful_status_codes.include?(status_code)
   end
 end

@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.4.4: FIX: some tus servers return 200 (vs. 204) for upload request
+Upcoming v0.4.5: FIX: Upload 413 code. Extract UploadRequest (used by Uploader)
+- FIX: Upload 413 code ("resource's size exceeded"), by adding ContentType to UploadRequest
+- Extract UploadRequest from Uploader.push_chunk.
+
+2020-07-27 v0.4.4: FIX: some tus servers return 200 (vs. 204) for upload request
 - added specs to split file into multiple chunks
 
 2020-07-24 v0.4.3: FIX: Can upload video files. Testing via tus-server.

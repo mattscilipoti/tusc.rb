@@ -171,15 +171,15 @@ RSpec.describe TusClient::Uploader do
     before(:each) do
       # Mock the tus server
       stub_request(:head, upload_url)
-        .with(headers: headers)
-        .to_return(headers: { 'Upload-Offset' => '234' })
+        .with(headers: extra_headers)
+        .to_return(status: 200, headers: { 'Upload-Offset' => '0' })
 
       stub_request(:patch, upload_url)
-        .with(headers: headers)
-        .to_return(headers: { 'Upload-Offset' => '345' })
+        .with(headers: extra_headers)
+        .to_return(status: 204, headers: { 'Upload-Offset' => '3' }) # mock_file.size
     end
 
-    let(:headers) do
+    let(:extra_headers) do
       { 'Passed-Header' => 'has been included' }
     end
 
@@ -189,7 +189,7 @@ RSpec.describe TusClient::Uploader do
       TusClient::Uploader.new(
         io: mock_file,
         upload_url: upload_url,
-        extra_headers: headers
+        extra_headers: extra_headers
       ).tap do |uploader|
         allow(uploader).to receive(:chunk_size).and_return(3)
         allow(uploader).to receive(:content_type).and_return(uploader.default_content_type)
@@ -199,13 +199,13 @@ RSpec.describe TusClient::Uploader do
     it '#perform passes the headers to http call' do
       # checked by the stub_request above
       response = subject.perform
-      expect(response.offset).to eql(345)
+      expect(response.offset).to eql(3) # uploaded file size
     end
 
     it '#retrieve_offset passes the headers to http call' do
       # checked by the stub_request above
       response = subject.retrieve_offset
-      expect(response).to eql(234)
+      expect(response).to eql(0) # initial offset (from head request)
     end
   end
 end

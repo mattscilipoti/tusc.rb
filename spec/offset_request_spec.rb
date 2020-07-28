@@ -11,7 +11,7 @@ RSpec.describe 'TusClient::OffsetRequest (constructor)' do
     expect(request.upload_uri.to_s).to eql('https://offset.example.com')
   end
 
-  it 'accepts a URI' do
+  it 'accepts an upload_uri (type: URI)' do
     upload_uri = URI.parse('https://offset.example.com')
     request = TusClient::OffsetRequest.new(upload_url: upload_uri)
     expect(request.upload_uri).to be_a(URI)
