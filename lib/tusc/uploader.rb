@@ -113,7 +113,7 @@ class TusClient::Uploader
 
     logger.debug do
       ['TUS PATCH',
-       sending: {
+       request: {
          # WORKAROUND: receiving error truncating body
          # *** Encoding::CompatibilityError Exception: incompatible character encodings: UTF-8 and ASCII-8BIT
          # For the test file, it works for truncate_middle(12)
@@ -136,7 +136,7 @@ class TusClient::Uploader
     received_header = response.each_key.collect { |k| { k => response.header[k] } }
     logger.debug do
       ['TUS PATCH',
-       received: {
+       response: {
          status: response.code,
          header: received_header,
          body: response.body.to_s.truncate_middle(60)

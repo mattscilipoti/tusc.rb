@@ -31,7 +31,7 @@ class TusClient::OffsetRequest
   def perform
     logger.debug do
       ['TUS HEAD',
-       sending: { upload_url: upload_uri.to_s, header: headers }]
+       request: { upload_url: upload_uri.to_s, header: headers }]
     end
 
     response = Net::HTTP.start(
@@ -45,7 +45,7 @@ class TusClient::OffsetRequest
 
     logger.debug do
       ['TUS HEAD',
-       received: {
+       response: {
          status: response.code,
          header: received_header,
          body: response.body.to_s.truncate_middle(60)

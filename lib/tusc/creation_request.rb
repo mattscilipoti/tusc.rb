@@ -47,7 +47,7 @@ class TusClient::CreationRequest
     received_header = response.each_key.collect { |k| { k => response.header[k] } }
     logger.debug do
       ['TUS POST',
-       received: {
+       response: {
          status: response.code,
          header: received_header,
          body: response.body.to_s.truncate_middle(60)
