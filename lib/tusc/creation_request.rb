@@ -29,7 +29,11 @@ class TusClient::CreationRequest
   def perform
     logger.debug do
       ['TUS POST',
-       sending: { tus_creation_url: tus_creation_uri.to_s, header: headers }]
+       request: {
+         tus_creation_url: tus_creation_uri.to_s,
+         header: headers,
+         body: body.truncate_middle(80) # body is usually small hash of config items
+       }]
     end
 
     response = Net::HTTP.start(

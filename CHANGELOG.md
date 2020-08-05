@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming:
+- CreationRequest logs body (used by some tus servers; e.g. Vimeo)
+
 2020-07-28 v0.4.5: FIX: Upload 413 code. Extract UploadRequest (used by Uploader)
 - FIX: Upload 413 code ("resource's size exceeded"), by adding ContentType to UploadRequest
 - Extract UploadRequest from Uploader.push_chunk.
