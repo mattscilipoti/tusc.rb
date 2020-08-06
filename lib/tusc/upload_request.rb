@@ -1,7 +1,5 @@
-require 'digest'
-require 'net/http'
+require_relative 'http_service'
 require_relative 'upload_response'
-require_relative '../core_ext/string/truncate'
 
 module TusClient
   # Asks tus server to upload a chunk of a file, from a specific offset
@@ -50,38 +48,12 @@ module TusClient
     end
 
     def perform
-      logger.debug do
-        ['TUS PATCH',
-         request: {
-           # WORKAROUND: receiving error truncating body
-           # *** Encoding::CompatibilityError Exception: incompatible character encodings: UTF-8 and ASCII-8BIT
-           # For the test file, it works for truncate_middle(12)
-           #  but not truncate_middle(13)
-           # body: chunk.to_s.truncate_middle(50),
-           body_md5: Digest::MD5.hexdigest(chunk_to_upload),
-           header: headers,
-           url: upload_uri.to_s
-         }]
-      end
-
-      response = Net::HTTP.start(
-        upload_uri.host,
-        upload_uri.port,
-        use_ssl: upload_uri.scheme == 'https'
-      ) do |http|
-        http.patch(upload_uri.path, chunk_to_upload, headers)
-      end
-
-      received_header = response.each_key.collect { |k| { k => response.header[k] } }
-      logger.debug do
-        ['TUS PATCH',
-         response: {
-           status: response.code,
-           header: received_header,
-           body: response.body.to_s.truncate_middle(60)
-         }]
-      end
-
+      response = HttpService.patch(
+        uri: upload_uri,
+        headers: headers,
+        body: chunk_to_upload,
+        logger: logger
+      )
       TusClient::UploadResponse.new(response, file_size)
     end
 

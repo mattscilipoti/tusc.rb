@@ -1,6 +1,5 @@
-require 'net/http'
+require_relative 'http_service'
 require_relative 'creation_response'
-require_relative '../core_ext/string/truncate'
 
 # Sends the creation request to the tus server
 class TusClient::CreationRequest
@@ -27,33 +26,12 @@ class TusClient::CreationRequest
   # Sends the creation request to the tus server
   # returns an upload_url (in CreationResponse)
   def perform
-    logger.debug do
-      ['TUS POST',
-       request: {
-         tus_creation_url: tus_creation_uri.to_s,
-         header: headers,
-         body: body.to_s.truncate_middle(80) # body is usually small hash of config items
-       }]
-    end
-
-    response = Net::HTTP.start(
-      tus_creation_uri.host,
-      tus_creation_uri.port,
-      use_ssl: tus_creation_uri.scheme == 'https'
-    ) do |http|
-      http.post(tus_creation_uri.path, body, headers)
-    end
-
-    received_header = response.each_key.collect { |k| { k => response.header[k] } }
-    logger.debug do
-      ['TUS POST',
-       response: {
-         status: response.code,
-         header: received_header,
-         body: response.body.to_s.truncate_middle(60)
-       }]
-    end
-
+    response = HttpService.post(
+      uri: tus_creation_uri,
+      headers: headers,
+      body: body,
+      logger: logger
+    )
     TusClient::CreationResponse.new(response)
   end
 
