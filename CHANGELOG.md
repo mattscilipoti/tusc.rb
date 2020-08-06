@@ -8,6 +8,7 @@ Upcoming v0.4.6: FIX CreationResponse#body, tweak logs
 - FIX CreationResponse#body (for blank body)
 - CreationRequest logs body (used by some tus servers; e.g. Vimeo)
 - Log request/response vs. sending/receiving
+- #truncate uses ellipse (vs. 3 periods)
 
 2020-07-28 v0.4.5: FIX: Upload 413 code. Extract UploadRequest (used by Uploader)
 - FIX: Upload 413 code ("resource's size exceeded"), by adding ContentType to UploadRequest
