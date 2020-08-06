@@ -32,7 +32,7 @@ RSpec.describe TusClient::OffsetRequest do
     )
   end
 
-  let(:upload_url) { 'https://tus.exmaple.com/file/-1' }
+  let(:upload_url) { 'https://tus.example.com/file/-1' }
 
   describe '#headers' do
     it 'includes Tus-Resumable' do

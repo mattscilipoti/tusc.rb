@@ -101,49 +101,7 @@ class TusClient::Uploader
   end
 
   def push_chunk(chunk, offset)
-    # push_chunk_directly(chunk, offset)
     push_chunk_via_upload_request(chunk, offset)
-  end
-
-  def push_chunk_directly(chunk, offset)
-    push_headers = {
-      'Upload-Offset' => offset.to_s
-    }
-    headers = self.headers.merge(push_headers)
-
-    logger.debug do
-      ['TUS PATCH',
-       request: {
-         # WORKAROUND: receiving error truncating body
-         # *** Encoding::CompatibilityError Exception: incompatible character encodings: UTF-8 and ASCII-8BIT
-         # For the test file, it works for truncate_middle(12)
-         #  but not truncate_middle(13)
-         # body: chunk.to_s.truncate_middle(50),
-         body_md5: Digest::MD5.hexdigest(chunk),
-         header: headers,
-         url: upload_url.to_s
-       }]
-    end
-
-    response = Net::HTTP.start(
-      upload_uri.host,
-      upload_uri.port,
-      use_ssl: upload_uri.scheme == 'https'
-    ) do |http|
-      http.patch(upload_uri.path, chunk, headers)
-    end
-
-    received_header = response.each_key.collect { |k| { k => response.header[k] } }
-    logger.debug do
-      ['TUS PATCH',
-       response: {
-         status: response.code,
-         header: received_header,
-         body: response.body.to_s.truncate_middle(60)
-       }]
-    end
-
-    TusClient::UploadResponse.new(response, io.size)
   end
 
   def push_chunk_via_upload_request(chunk, offset)

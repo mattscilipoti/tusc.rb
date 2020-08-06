@@ -12,7 +12,7 @@ RSpec.describe TusClient::CreationRequest do
     )
   end
 
-  let(:tus_creation_url) { 'https://tus.exmaple.com/uploads' }
+  let(:tus_creation_url) { 'https://tus.example.com/uploads' }
   let(:mock_file) { StringIO.new('abc') }
 
   describe '#headers' do
