@@ -1,18 +1,13 @@
+require_relative 'responsorial'
+
 class TusClient::OffsetResponse
+  include Responsorial
   def initialize(response)
     @response = response
   end
 
   def offset
-    @response.header['Upload-Offset'].to_i # nil.to_i == 0
-  end
-
-  def raw
-    @response
-  end
-
-  def status_code
-    @response.code.to_i
+    raw.header['Upload-Offset'].to_i # nil.to_i == 0
   end
 
   def success?

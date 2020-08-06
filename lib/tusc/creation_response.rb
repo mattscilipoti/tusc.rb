@@ -1,22 +1,14 @@
+require 'json'
+require_relative 'responsorial'
+
 class TusClient::CreationResponse
+  include Responsorial
   def initialize(response)
     @response = response
   end
 
-  def body
-    JSON.parse(@response.body)
-  end
-
   def location
-    @response.header && @response.header['Location']
-  end
-
-  def raw
-    @response
-  end
-
-  def status_code
-    @response.code.to_i
+    raw.header && raw.header['Location']
   end
 
   def success?

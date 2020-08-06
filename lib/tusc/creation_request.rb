@@ -32,7 +32,7 @@ class TusClient::CreationRequest
        request: {
          tus_creation_url: tus_creation_uri.to_s,
          header: headers,
-         body: body.truncate_middle(80) # body is usually small hash of config items
+         body: body.to_s.truncate_middle(80) # body is usually small hash of config items
        }]
     end
 
