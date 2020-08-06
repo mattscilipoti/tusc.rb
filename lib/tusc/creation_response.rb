@@ -2,7 +2,7 @@ require 'json'
 require_relative 'responsorial'
 
 class TusClient::CreationResponse
-  include Responsorial
+  include TusClient::Responsorial
   def initialize(response)
     @response = response
   end

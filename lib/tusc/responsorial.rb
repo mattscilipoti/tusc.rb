@@ -1,5 +1,5 @@
 # shared interface for Response objects
-module Responsorial
+module TusClient::Responsorial
   def body
     body = raw.body
     body.blank? ? '' : JSON.parse(body)

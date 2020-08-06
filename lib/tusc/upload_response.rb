@@ -1,6 +1,6 @@
 require_relative 'responsorial'
 class TusClient::UploadResponse
-  include Responsorial
+  include TusClient::Responsorial
   attr_reader :file_size
   def initialize(response, file_size)
     @response = response

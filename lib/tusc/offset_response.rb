@@ -1,7 +1,7 @@
 require_relative 'responsorial'
 
 class TusClient::OffsetResponse
-  include Responsorial
+  include TusClient::Responsorial
   def initialize(response)
     @response = response
   end
