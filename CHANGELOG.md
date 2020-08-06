@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.5.0: Log source is tus code
-- move Responsorial to TusClient namespace
-- move HttpService to TusClient namespace
-- move HttpService to lib/. lib/tusc/ is reserved for tus code.
-- tests use std log (log/tusc.log) vs. log/tusc_test.log
+2020-08-06 v0.5.0: Logged 'source' is tus code. Namespace support classes.
+- Move Responsorial to TusClient namespace
+- Move HttpService to TusClient namespace
+- Move HttpService to lib/. lib/tusc/ is reserved for tus code.
+- Logged 'source' is code from tusc dir, not support libraries
+- Tests use std log (log/tusc.log) vs. log/tusc_test.log
 
 2020-08-05 v0.4.6: FIX CreationResponse#body, HttpService, tweak logs
 - FIX CreationResponse#body (for blank body)
