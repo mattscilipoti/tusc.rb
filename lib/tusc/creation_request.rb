@@ -1,4 +1,4 @@
-require_relative 'http_service'
+require_relative '../http_service'
 require_relative 'creation_response'
 
 # Sends the creation request to the tus server

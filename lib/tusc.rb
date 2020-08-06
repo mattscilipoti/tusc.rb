@@ -36,16 +36,18 @@ module TusClient
       # logger = Ougai::Logger.new(STDOUT)
       logger = Ougai::Logger.new(log_dir.join('tusc.log'), 1, 1 * MEGABYTE)
       logger.level = log_level
-
-      error_logger = Ougai::Logger.new(log_dir.join('tusc_error.log'), 1, 1 * MEGABYTE)
-      error_logger.level = Logger::ERROR
-      error_logger.before_log = lambda do |data|
-        # find first entry in this library
-        source = caller_locations.find { |entry| entry.to_s =~ /tusc/ }.to_s
+      logger.before_log = lambda do |data|
+        # find first entry in under the tusc dir
+        # source should be tus code, not support code
+        source = caller_locations.find { |entry| entry.to_s =~ %r{/tusc/} }.to_s
         method_name = (source =~ /`([^']*)'/ and Regexp.last_match(1)).to_s
         data[:source] = source
         data[:method] = method_name
       end
+
+      error_logger = Ougai::Logger.new(log_dir.join('tusc_error.log'), 1, 1 * MEGABYTE)
+      error_logger.level = Logger::ERROR
+
       logger.extend Ougai::Logger.broadcast(error_logger)
       logger
     end

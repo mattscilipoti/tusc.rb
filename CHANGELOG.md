@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.4.7: Log source is tus code
+- move HttpService to lib/, tusc/ contains tus code.
+- tests use std log (log/tusc.log) vs. log/tusc_test.log
+
 2020-08-05 v0.4.6: FIX CreationResponse#body, HttpService, tweak logs
 - FIX CreationResponse#body (for blank body)
 - Extract HttpService (head, patch, post)

@@ -1,4 +1,4 @@
-require_relative 'http_service'
+require_relative '../http_service'
 require_relative 'upload_response'
 
 module TusClient

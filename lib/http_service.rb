@@ -1,6 +1,6 @@
 require 'digest'
 require 'net/http'
-require_relative '../core_ext/string/truncate'
+require_relative 'core_ext/string/truncate'
 
 # Provides basic http calls (head, patch, post), with detailed logging
 class HttpService

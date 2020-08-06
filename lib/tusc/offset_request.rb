@@ -1,4 +1,4 @@
-require_relative 'http_service'
+require_relative '../http_service'
 require_relative 'offset_response'
 
 # Asks tus server for appriopriate offset

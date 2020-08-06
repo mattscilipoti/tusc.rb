@@ -1,20 +1,7 @@
 require 'bundler/setup'
 require 'tusc'
-require 'ougai' # logger
 
-test_logger = Ougai::Logger.new(TusClient.log_dir.join('tusc_test.log'), 1, 200 * TusClient::KILOBYTE)
-# pretty formatting
-# test_logger.formatter = Ougai::Formatters::Readable.new
-test_logger.level = Logger::DEBUG
-test_logger.before_log = lambda do |data|
-  # find first entry in this library
-  source = caller_locations.find { |entry| entry.to_s =~ /tusc/ }.to_s
-  method_name = (source =~ /`([^']*)'/ and Regexp.last_match(1)).to_s
-  data[:source] = source
-  data[:method] = method_name
-end
-
-TusClient.logger = test_logger
+TusClient.log_level = Logger::DEBUG
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
