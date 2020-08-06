@@ -26,7 +26,7 @@ class TusClient::CreationRequest
   # Sends the creation request to the tus server
   # returns an upload_url (in CreationResponse)
   def perform
-    response = HttpService.post(
+    response = TusClient::HttpService.post(
       uri: tus_creation_uri,
       headers: headers,
       body: body,

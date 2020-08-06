@@ -28,7 +28,7 @@ class TusClient::OffsetRequest
   # Retrieves offset via a HEAD request to the tus server
   # Returns the offset (in a OffsetResponse)
   def perform
-    response = HttpService.head(
+    response = TusClient::HttpService.head(
       uri: upload_uri,
       headers: headers,
       logger: logger

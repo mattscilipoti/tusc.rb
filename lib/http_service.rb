@@ -3,7 +3,7 @@ require 'net/http'
 require_relative 'core_ext/string/truncate'
 
 # Provides basic http calls (head, patch, post), with detailed logging
-class HttpService
+class TusClient::HttpService
   def self.head(uri:, headers:, logger:)
     request = Net::HTTP::Head.new(uri, headers)
     _perform(http_request: request, logger: logger)

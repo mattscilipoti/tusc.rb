@@ -48,7 +48,7 @@ module TusClient
     end
 
     def perform
-      response = HttpService.patch(
+      response = TusClient::HttpService.patch(
         uri: upload_uri,
         headers: headers,
         body: chunk_to_upload,

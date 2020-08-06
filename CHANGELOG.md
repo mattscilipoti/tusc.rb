@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Upcoming v0.5.0: Log source is tus code
 - move Responsorial to TusClient namespace
-- move HttpService to lib/, tusc/ contains tus code.
+- move HttpService to TusClient namespace
+- move HttpService to lib/. lib/tusc/ is reserved for tus code.
 - tests use std log (log/tusc.log) vs. log/tusc_test.log
 
 2020-08-05 v0.4.6: FIX CreationResponse#body, HttpService, tweak logs
