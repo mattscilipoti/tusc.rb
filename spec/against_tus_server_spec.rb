@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'digest' # for checksums
 require_relative '../lib/tusc'
 
-RSpec.describe 'TusClient: uploading to a local tus server' do
+RSpec.describe 'TusClient: uploading to a local tus server', :requires_tus_server do
   tus_server_storage_dir = Pathname('./data') # default for tus-server gem
   tus_server_uri = URI.parse('http://localhost:9292/files') # started manually, via bin/rackup
 

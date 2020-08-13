@@ -1,7 +1,7 @@
 ---
-sudo: false
 language: ruby
 cache: bundler
+script: rake spec_ci
 rvm:
   - 2.7.1
 before_install: gem install bundler -v 1.17.3
