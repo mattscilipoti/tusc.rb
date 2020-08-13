@@ -69,7 +69,7 @@ class TusClient::Uploader
   end
 
   def logger
-    @logger ||= TusClient.logger.child(library: [self.class.name])
+    @logger ||= TusClient.logger
   end
 
   def offset_requester

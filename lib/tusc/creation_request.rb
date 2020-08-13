@@ -20,7 +20,7 @@ class TusClient::CreationRequest
   end
 
   def logger
-    @logger ||= TusClient.logger.child(library: [self.class.name])
+    @logger ||= TusClient.logger
   end
 
   # Sends the creation request to the tus server

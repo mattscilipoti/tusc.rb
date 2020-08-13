@@ -22,7 +22,7 @@ class TusClient::OffsetRequest
   end
 
   def logger
-    @logger ||= TusClient.logger.child(library: [self.class.name])
+    @logger ||= TusClient.logger
   end
 
   # Retrieves offset via a HEAD request to the tus server
