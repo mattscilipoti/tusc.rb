@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Upcoming v0.6.3: Fix Travis CI error (local tus server)
 - Remove unused 'ougai' gem
 - Move dev/test/ci dependencies to Gemfile
+- Supports ruby 2.5, 2.6, 2.7
 - For Travis CI:
   - Use `rake spec_ci`
   - Specify limited dependencies for travis ci

@@ -8,7 +8,12 @@ tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io),
 > the user wants to pause, or by accident in case of an network issue or server
 > outage.
 
-[![Build Status](https://travis-ci.com/mattscilipoti/tusc.rb.svg?branch=master)](https://travis-ci.com/mattscilipoti/tusc.rb)
+[![Gem](https://img.shields.io/gem/v/tusc)](https://github.com/mattscilipoti.tusc.rb)
+[![Build Status](https://travis-ci.com/mattscilipoti/tusc.rb.svg?branch=master&logo=travis)](https://travis-ci.com/mattscilipoti/tusc.rb)
+![Ruby 2.7.x](https://img.shields.io/badge/ruby-2.7-blue)
+![Ruby 2.6.x](https://img.shields.io/badge/ruby-2.6-blue)
+![Ruby 2.5.x](https://img.shields.io/badge/ruby-2.5-blue)
+![GitHub](https://img.shields.io/github/license/mattscilipoti/tusc.rb)
 
 ## Installation
 
@@ -39,6 +44,8 @@ Or install it yourself as:
 ### Example
 
 ```
+require 'tusc'
+
 File.open('path/to/file') do |file|
   creation_request = TusClient::CreationRequest.new(
     tus_creation_url: 'https://example.com',
