@@ -5,4 +5,8 @@ cache: bundler
 script: bundle exec rake spec_ci
 rvm:
   - 2.7.1
+  - 2.7
+  - 2.6
+  - 2.5
+  - 2.4
 before_install: gem install bundler -v 1.17.3

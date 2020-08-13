@@ -5,10 +5,11 @@ The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Upcoming v0.6.3: Fix Travis CI error (local tus server)
-- Use `rake spec_ci`
 - Remove unused 'ougai' gem
-- Specify limited dependencies for travis ci
 - Move dev/test/ci dependencies to Gemfile
+- For Travis CI:
+  - Use `rake spec_ci`
+  - Specify limited dependencies for travis ci
 
 2020-08-13 v0.6.2: Correct gemspec: allowed_push_host, changelog_uri
 
