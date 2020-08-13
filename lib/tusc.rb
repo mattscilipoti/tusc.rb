@@ -33,7 +33,7 @@ module TusClient
   end
 
   def self.log_level
-    @log_level ||= Logger::ERROR
+    @log_level ||= Logger::INFO
   end
 
   def self.log_level=(value)

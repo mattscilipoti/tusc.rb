@@ -59,7 +59,7 @@ end
 
 We log to `log/tusc.log`, in JSON format.
 - You can adjust verbosity by setting `TusClient.log_level`
-- It defaults to `Logger::ERROR`
+- It defaults to `Logger::INFO`
 
 > Tip: Can combine with Rails logs using `TusClient.logger = Rails.logger`
 > Tip: "bunyan" is good tool for viewing "pretty" formatted logs. Note: we're recommend [the CLI](https://github.com/trentm/node-bunyan#installation), not the nodejs library.

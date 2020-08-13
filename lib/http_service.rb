@@ -22,7 +22,7 @@ class TusClient::HttpService
   end
 
   def self._log_request(http_request, logger)
-    logger.debug do
+    logger.info do
       uri = http_request.uri
 
       header_info = {}
@@ -57,7 +57,7 @@ class TusClient::HttpService
       header_info[key] = value
     end
 
-    logger.debug do
+    logger.info do
       [ "TUS #{http_method}",
         { response: {
          status: http_response.code,
