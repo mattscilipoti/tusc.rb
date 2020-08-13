@@ -44,8 +44,10 @@ class TusClient::HttpService
                         end
       request_info[:body] = formatted_body
 
-      ["TUS #{http_request.method}",
-       request: request_info]
+      [ "TUS #{http_request.method}",
+        { request: request_info },
+        TusClient.log_info,
+      ]
     end
   end
 
@@ -56,12 +58,14 @@ class TusClient::HttpService
     end
 
     logger.debug do
-      ["TUS #{http_method}",
-       response: {
+      [ "TUS #{http_method}",
+        { response: {
          status: http_response.code,
          header: header_info,
          body: http_response.body.to_s.truncate_middle(60)
-       }]
+        }},
+        TusClient.log_info,
+      ]
     end
   end
 

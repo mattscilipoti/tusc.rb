@@ -21,6 +21,17 @@ module TusClient
     log_dir
   end
 
+  def self.log_info
+    # find first entry in under the tusc dir
+    # source should be tus code, not support code
+    source = caller_locations.find { |entry| entry.to_s =~ %r{/tusc/} }.to_s
+    # method_name = (source =~ /`([^']*)'/ and Regexp.last_match(1)).to_s
+    {
+      source: source,
+      # method: method_name,
+    }
+  end
+
   def self.log_level
     @log_level ||= Logger::ERROR
   end
