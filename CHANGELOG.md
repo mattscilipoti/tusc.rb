@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.6.3: Fix Travis CI error (local tus server)
+- Remove unused 'ougai' gem
+
 2020-08-13 v0.6.2: Correct gemspec: allowed_push_host, changelog_uri
 
 2020-08-12 v0.6.1: Prepare for deploy to RubyGems
