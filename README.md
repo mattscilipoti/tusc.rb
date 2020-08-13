@@ -8,6 +8,8 @@ tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io),
 > the user wants to pause, or by accident in case of an network issue or server
 > outage.
 
+[![Build Status](https://travis-ci.com/mattscilipoti/tusc.rb.svg?branch=master)](https://travis-ci.com/mattscilipoti/tusc.rb)
+
 ## Installation
 
 Add this line to your application's Gemfile:
