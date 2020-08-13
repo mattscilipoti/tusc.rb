@@ -93,8 +93,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Testing
 
-We use rspec, so everything is under `spec/` directory.
-Files used for testing are in `spec/fixtures`.
+- We use rspec, so everything is under `spec/` directory.
+- Fixture files used for testing are in `spec/fixtures`.
+- To test against an actual tus server, run one via `bin/rackup`
 
 ## Contributing
 

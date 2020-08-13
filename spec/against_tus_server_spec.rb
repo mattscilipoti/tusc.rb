@@ -4,17 +4,17 @@ require_relative '../lib/tusc'
 
 RSpec.describe 'TusClient: uploading to a local tus server' do
   tus_server_storage_dir = Pathname('./data') # default for tus-server gem
-  tus_server_uri = URI.parse('http://localhost:9292/files') # started manually, via rackup
+  tus_server_uri = URI.parse('http://localhost:9292/files') # started manually, via bin/rackup
 
   before(:all) do
     response = Net::HTTP.start(tus_server_uri.host, tus_server_uri.port) do |http|
       http.options(tus_server_uri.path)
     end
     if response.code != '204'
-      raise 'ACTION NEEDED: Please start the TEST tus server maually, via $`rackup`'
+      raise 'ACTION NEEDED: Please start the TEST tus server maually, via $`bin/rackup`'
     end # No content
   rescue Errno::ECONNREFUSED => e
-    raise "ACTION NEEDED: Please start the TEST tus server maually, via $`rackup`\n  #{e.message}"
+    raise "ACTION NEEDED: Please start the TEST tus server maually, via $`bin/rackup`\n  #{e.message}"
   end
 
   before(:all) do
