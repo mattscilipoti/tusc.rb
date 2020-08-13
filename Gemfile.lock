@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tusc (0.5.0)
+    tusc (0.6.0)
       ougai (~> 1.8)
 
 GEM

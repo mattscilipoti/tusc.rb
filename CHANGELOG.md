@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Upcoming v0.6.0: Revert to basic ruby Logger
 - switch from Ougai::Logger to Ruby Logger.
-  - Now, rails app can assign `TusClient.logger = Rails.logger`
-  - still logs :source
+  - Now, ruby/rails app can assign, e.g. `TusClient.logger = Rails.logger`
+  - Still logs :source
 - Logger.level = Logger::INFO (was ERROR)
-- add binstub `bin/rackup`
+- Add binstub `bin/rackup` (for testing)
 
 2020-08-06 v0.5.0: Logged 'source' is tus code. Namespace support classes.
 - Move Responsorial to TusClient namespace
