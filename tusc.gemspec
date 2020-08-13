@@ -33,13 +33,4 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-
-  spec.add_development_dependency 'amazing_print', '~> 1.2'
-  spec.add_development_dependency 'bundler', '~> 1.17'
-  spec.add_development_dependency 'pry-byebug', '~> 3.9'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'tus-server', '~> 2.3'
-  spec.add_development_dependency 'webmock', '~> 3.8'
-  spec.add_development_dependency 'yard', '~> 0.9'
 end

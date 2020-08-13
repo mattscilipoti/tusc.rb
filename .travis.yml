@@ -1,5 +1,6 @@
 ---
 language: ruby
+bundler_args: --with ci
 cache: bundler
 script: rake spec_ci
 rvm:
