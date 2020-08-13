@@ -1,10 +1,6 @@
 # tusc.rb: Tus Client for Ruby
 
-tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io).
-
-**Supports protocol version:** 1.0.0
-
-<img alt="Tus logo" src="https://github.com/tus/tus.io/blob/master/assets/img/tus1.png?raw=true" width="30%" align="right" />
+tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io), version 1.0.0.
 
 > **tus** is a protocol based on HTTP for *resumable file uploads*. Resumable
 > means that an upload can be interrupted at any moment and can be resumed without
@@ -22,7 +18,7 @@ gem 'tusc'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -33,7 +29,7 @@ Or install it yourself as:
 - Perform a CreationRequest
 - Create an Uploader, passing the:
   - IO object (file)
-  - upload creation request, provided by the tus server
+  - Upload URL (provided by the Creation Request)
 - Start the upload
 
 > We recommend reviewing the specs in `spec/against_tus_server_spec.rb`. There are examples of uploading files (e.g. text, video).
@@ -57,11 +53,13 @@ end
 
 ## Logging
 
-We log to `log/tusc.log`, in JSON format.
+We log to `log/tusc.log`.
+
 - You can adjust verbosity by setting `TusClient.log_level`
 - It defaults to `Logger::INFO`
 
 > Tip: Can combine with Rails logs using `TusClient.logger = Rails.logger`
+
 > Tip: "bunyan" is good tool for viewing "pretty" formatted logs. Note: we're recommend [the CLI](https://github.com/trentm/node-bunyan#installation), not the nodejs library.
 
 ## tus overview
@@ -79,7 +77,7 @@ If the PATCH request got interrupted or failed for another reason, the client ca
 Optionally, if the client wants to delete an upload because it won’t be needed anymore, a DELETE request can be sent to the upload URL. After this, the upload can be cleaned up by the server and resuming the upload is not possible anymore.
 
 ## TODO:
-- [X] Basic upload
+- [X] Basic upload (via creation request and upload)
 - [X] Can pass tus_server specific/extra headers (like Vimeo requires)
 - [ ] Can resume failed upload
 - [ ] Supports Upload-Metadata
@@ -94,6 +92,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Testing
 
 - We use rspec, so everything is under `spec/` directory.
+- Run via `bin/rspec` or `rake` (the default rake task is :spec)
 - Fixture files used for testing are in `spec/fixtures`.
 - To test against an actual tus server, run one via `bin/rackup`
 

@@ -1,5 +1,9 @@
 require_relative 'responsorial'
 
+# Parses the response from an OffsetRequest
+#
+# Surfacing important info:
+# - offset
 class TusClient::OffsetResponse
   include TusClient::Responsorial
   def initialize(response)

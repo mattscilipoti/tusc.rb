@@ -1,4 +1,12 @@
 require_relative 'responsorial'
+
+# Parses the response from an UploadRequest
+#
+# Surfacing important info:
+# - complete?
+# - incomplete?
+# - offset
+# - success?
 class TusClient::UploadResponse
   include TusClient::Responsorial
   attr_reader :file_size

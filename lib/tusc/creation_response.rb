@@ -1,5 +1,9 @@
 require_relative 'responsorial'
 
+# Parses the response from a CreationRequest
+#
+# Surfacing important info:
+# - location -> upload_uri
 class TusClient::CreationResponse
   include TusClient::Responsorial
   def initialize(response)

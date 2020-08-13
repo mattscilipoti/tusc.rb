@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.6.0: Revert to basic ruby Logger
+Upcoming v0.6.1: Prepare for deploy to RubyGems
+- Updated docs, using yard.
+
+2020-08-12 v0.6.0: Revert to basic ruby Logger, level=INFO
 - switch from Ougai::Logger to Ruby Logger.
   - Now, ruby/rails app can assign, e.g. `TusClient.logger = Rails.logger`
   - Still logs :source
