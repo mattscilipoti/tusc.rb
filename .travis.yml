@@ -2,7 +2,7 @@
 language: ruby
 bundler_args: --with ci
 cache: bundler
-script: rake spec_ci
+script: bundle exec rake spec_ci
 rvm:
   - 2.7.1
 before_install: gem install bundler -v 1.17.3
