@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tusc (0.6.2)
+    tusc (0.6.3)
 
 GEM
   remote: https://rubygems.org/
