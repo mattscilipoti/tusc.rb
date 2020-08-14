@@ -1,6 +1,8 @@
 require 'bundler/setup'
+require 'coveralls'
 require 'tusc'
 
+Coveralls.wear!
 TusClient.log_level = Logger::DEBUG
 
 RSpec.configure do |config|
