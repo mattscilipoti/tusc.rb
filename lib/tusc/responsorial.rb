@@ -1,4 +1,7 @@
-# shared interface for Response objects
+# Shared interface for Response objects
+#
+# re·​spon·​so·​ri·​al | \ rə̇¦spän¦sōrēəl, (¦)rē¦s- \
+# : relating to or consisting of responses
 module TusClient::Responsorial
   def body
     body = raw.body

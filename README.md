@@ -1,6 +1,6 @@
 # tusc.rb: Tus Client for Ruby
 
-tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io), version 1.0.0.
+tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io), for Tus-Resumable v1.0.0.
 
 > **tus** is a protocol based on HTTP for *resumable file uploads*. Resumable
 > means that an upload can be interrupted at any moment and can be resumed without
@@ -38,10 +38,14 @@ Or install it yourself as:
 - Perform a CreationRequest
 - Create an Uploader, passing the:
   - IO object (file)
-  - Upload URL (provided by the Creation Request)
+  - Upload URL (provided by the CreationReponse)
 - Start the upload
 
 > We recommend reviewing the specs in `spec/against_tus_server_spec.rb`. There are examples of uploading files (e.g. text, video).
+
+> Each request type has a corresponding response type, which surfaces important information.
+
+> You can pass extra information via :extra_headers and/or :body params. This is helpful for special headers (e.g. Upload-Defer-Length) and tus servers that that need extra information.
 
 ### Example
 
@@ -86,6 +90,23 @@ Once the upload has been create, the client can start to transmit the actual upl
 If the PATCH request got interrupted or failed for another reason, the client can attempt to resume the upload. In order to resume, the client must know how much data the server has received. This information is obtained by sending a HEAD request to the upload URL and inspecting the returned Upload-Offset header. Once the client knows the upload offset, it can send another PATCH request until the upload is completely down.
 
 Optionally, if the client wants to delete an upload because it won’t be needed anymore, a DELETE request can be sent to the upload URL. After this, the upload can be cleaned up by the server and resuming the upload is not possible anymore.
+
+## What is supported?
+
+Core Protocol:
+
+- [X] [HEAD](https://tus.io/protocols/resumable-upload.html#head) (via OffsetRequest/Response)
+- [X] [PATCH](https://tus.io/protocols/resumable-upload.html#patch) (via UploadRequest/Response)
+- [ ] [OPTIONS](https://tus.io/protocols/resumable-upload.html#options)
+
+Protocol Extensions:
+
+- [X] [Creation](https://tus.io/protocols/resumable-upload.html#creation) (via CreationRequest/Response)
+- [ ] [Creation With Upload](https://tus.io/protocols/resumable-upload.html#creation-with-upload)
+- [ ] [Checksum](https://tus.io/protocols/resumable-upload.html#checksum)
+- [ ] [Termination](https://tus.io/protocols/resumable-upload.html#termination)
+- [ ] [Concatenation](https://tus.io/protocols/resumable-upload.html#concatenation)
+
 
 ## TODO:
 - [X] Basic upload (via creation request and upload)

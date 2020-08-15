@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+Upcoming v0.6.4: Use Coveralls for code coverage
+- Add Coveralls (for [code coverage](https://coveralls.io/r/mattscilipoti/tusc.rb) in Travis CI)
+- Readme lists "What is supported?"
+
 2020-08-13 v0.6.3: Fix Travis CI error (local tus server)
 - Remove unused 'ougai' gem
 - Move dev/test/ci dependencies to Gemfile
