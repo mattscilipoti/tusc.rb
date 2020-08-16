@@ -6,8 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Upcoming v0.6.4: Support OPTIONS request, code coverage metric
 - Support OPTIONS request via OptionsRequest/Response classes
-- Add Coveralls (for [code coverage](https://coveralls.io/r/mattscilipoti/tusc.rb) in Travis CI)
 - Readme lists "What is supported?"
+- Add Coveralls (for [code coverage](https://coveralls.io/r/mattscilipoti/tusc.rb) in Travis CI)
+- Add CodeClimate support and badge
 
 2020-08-13 v0.6.3: Fix Travis CI error (local tus server)
 - Remove unused 'ougai' gem

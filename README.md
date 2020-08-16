@@ -10,8 +10,9 @@ tusc.rb is a (tested) Ruby client for the [tus resumable upload protocol](http:/
 
 [![Gem](https://img.shields.io/gem/v/tusc)](https://github.com/mattscilipoti.tusc.rb)
 [![Build Status](https://travis-ci.com/mattscilipoti/tusc.rb.svg?branch=master&logo=travis)](https://travis-ci.com/mattscilipoti/tusc.rb)
-[![Test Coverage](https://coveralls.io/repos/mattscilipoti/tusc.rb/badge.svg?branch=master)](https://coveralls.io/r/mattscilipoti/tusc.rb)
 [![Maintainability](https://api.codeclimate.com/v1/badges/93198b592f31d691658d/maintainability)](https://codeclimate.com/github/mattscilipoti/tusc.rb/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/93198b592f31d691658d/test_coverage)](https://codeclimate.com/github/mattscilipoti/tusc.rb/test_coverage)
+[![Test Coverage](https://coveralls.io/repos/mattscilipoti/tusc.rb/badge.svg?branch=master)](https://coveralls.io/r/mattscilipoti/tusc.rb)
 
 ![Ruby 2.7.x](https://img.shields.io/badge/ruby-2.7-blue)
 ![Ruby 2.6.x](https://img.shields.io/badge/ruby-2.6-blue)
