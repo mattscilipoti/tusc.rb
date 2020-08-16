@@ -9,6 +9,11 @@ class TusClient::HttpService
     _perform(http_request: request, logger: logger)
   end
 
+  def self.options(uri:, headers:, logger:)
+    request = Net::HTTP::Options.new(uri, headers)
+    _perform(http_request: request, logger: logger)
+  end
+
   def self.patch(uri:, headers:, body:, logger:)
     request = Net::HTTP::Patch.new(uri, headers)
     request.body = body

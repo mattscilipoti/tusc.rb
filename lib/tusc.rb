@@ -2,6 +2,7 @@ require 'logger'
 require 'tusc/version'
 require_relative 'core_ext/object/blank'
 require_relative 'tusc/creation_request'
+require_relative 'tusc/options_request'
 require_relative 'tusc/uploader'
 
 class Logger::LogDevice

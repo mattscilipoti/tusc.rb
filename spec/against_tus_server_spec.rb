@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'digest' # for checksums
+require 'rspec/its'
 require_relative '../lib/tusc'
 
 RSpec.describe 'TusClient: uploading to a local tus server', :requires_tus_server do
@@ -41,6 +42,32 @@ RSpec.describe 'TusClient: uploading to a local tus server', :requires_tus_serve
       expect(response.status_code).to eql(201) # Created
       expect(response.upload_uri.path).to match(%r{files/#{upload_id_regex}})
     end
+  end
+
+  describe TusClient::OptionsRequest do
+    let(:request) do
+      TusClient::OptionsRequest.new(
+        tus_server_url: tus_server_uri.to_s
+      )
+    end
+
+    subject(:response) { request.perform }
+
+    its(:max_chunk_size) { should be_nil } # Not provided by tus-server
+    its(:status_code) { should eql(204) } # No Content
+    its(:supported_checksums) { should include('sha1') }
+    its(:supported_checksums) { should include('sha256') }
+    its(:supported_checksums) { should include('sha384') }
+    its(:supported_checksums) { should include('sha512') }
+    its(:supported_checksums) { should include('md5') }
+    its(:supported_checksums) { should include('crc32') }
+    its(:supported_extensions) { should include('checksum') }
+    its(:supported_extensions) { should include('concatenation') }
+    its(:supported_extensions) { should include('creation') }
+    its(:supported_extensions) { should include('creation-defer-length') }
+    its(:supported_extensions) { should include('expiration') }
+    its(:supported_extensions) { should include('termination') }
+    its(:supported_versions) { should eql('1.0.0') }
   end
 
   RSpec.shared_examples 'uploading a file' do

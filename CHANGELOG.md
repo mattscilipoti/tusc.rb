@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.6.4: Use Coveralls for code coverage
+Upcoming v0.6.4: Support OPTIONS request, code coverage metric
+- Support OPTIONS request via OptionsRequest/Response classes
 - Add Coveralls (for [code coverage](https://coveralls.io/r/mattscilipoti/tusc.rb) in Travis CI)
 - Readme lists "What is supported?"
 

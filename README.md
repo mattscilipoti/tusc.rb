@@ -1,6 +1,6 @@
 # tusc.rb: Tus Client for Ruby
 
-tusc.rb is a Ruby client for the [tus resumable upload protocol](http://tus.io), for Tus-Resumable v1.0.0.
+tusc.rb is a (tested) Ruby client for the [tus resumable upload protocol](http://tus.io), for Tus-Resumable v1.0.0. Supporting the Core Protocol and some Extentions (see [What is Supported?](#what-is-supported))
 
 > **tus** is a protocol based on HTTP for *resumable file uploads*. Resumable
 > means that an upload can be interrupted at any moment and can be resumed without
@@ -97,7 +97,7 @@ Core Protocol:
 
 - [X] [HEAD](https://tus.io/protocols/resumable-upload.html#head) (via OffsetRequest/Response)
 - [X] [PATCH](https://tus.io/protocols/resumable-upload.html#patch) (via UploadRequest/Response)
-- [ ] [OPTIONS](https://tus.io/protocols/resumable-upload.html#options)
+- [X] [OPTIONS](https://tus.io/protocols/resumable-upload.html#options) (via OptionsRequest/Response)
 
 Protocol Extensions:
 
@@ -111,8 +111,9 @@ Protocol Extensions:
 ## TODO:
 - [X] Basic upload (via creation request and upload)
 - [X] Can pass tus_server specific/extra headers (like Vimeo requires)
+- [ ] TusMaxSize (from OptionsRequest) informs max_chunk_size of UploadRequest
 - [ ] Can resume failed upload
-- [ ] Supports Upload-Metadata
+- [x] Supports "Upload-Metadata" header for POST (via extra_headers of CreationRequest)
 - [ ] Supports Upload-Defer-Length
 
 ## Development
