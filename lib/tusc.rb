@@ -34,19 +34,18 @@ module TusClient
   end
 
   def self.log_level
-    @log_level ||= Logger::INFO
+    logger.level
   end
 
   def self.log_level=(value)
-    @logger = nil # invalidate cache
-    @log_level = value
+    logger.level = value
   end
 
   def self.logger
     @logger ||= begin
       # logger = Logger.new(STDOUT)
       Logger.new(log_dir.join('tusc.log'), 1, 1 * MEGABYTE).tap do |logger|
-        logger.level = log_level
+        logger.level = Logger::INFO
       end
     end
   end
