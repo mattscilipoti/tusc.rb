@@ -47,6 +47,10 @@ Or install it yourself as:
 
 > Each request type has a corresponding response type, which surfaces important information.
 
+> To be uploaded, files are broken into "chunks". You can assign a different chunk size, in bytes,
+> via `TusClient.chunk_size=`.
+> Note: chunk_size is often bigger than the file size (thus creating one chunk).
+
 > You can pass extra information via :extra_headers and/or :body params. This is helpful for special headers (e.g. Upload-Defer-Length) and tus servers that that need extra information.
 
 ### Example

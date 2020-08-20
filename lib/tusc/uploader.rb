@@ -8,10 +8,6 @@ require_relative 'offset_request'
 class TusClient::Uploader
   attr_reader :extra_headers, :io, :upload_url
 
-  def self.chunk_size
-    10 * TusClient::MEGABYTE
-  end
-
   def self.default_content_type
     'application/offset+octet-stream'
   end
@@ -45,8 +41,10 @@ class TusClient::Uploader
     delete upload_url
   end
 
+  # Uploaded files are split into "chunks"
+  # This provides the size, in bytes, of each chunk
   def chunk_size
-    @chunk_size ||= TusClient::Uploader.chunk_size
+    @chunk_size ||= TusClient.chunk_size
   end
 
   def content_type

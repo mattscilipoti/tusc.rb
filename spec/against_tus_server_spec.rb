@@ -150,7 +150,7 @@ RSpec.describe 'TusClient: uploading to a local tus server', :requires_tus_serve
 
       subject(:uploader) do
         file_size = File.size(test_file_name_and_path)
-        allow(TusClient::Uploader).to receive(:chunk_size).and_return((file_size / 10).floor)
+        allow(TusClient).to receive(:chunk_size).and_return((file_size / 10).floor)
         creator = TusClient::CreationRequest.new(
           file_size: file_size,
           tus_creation_url: tus_server_uri.to_s

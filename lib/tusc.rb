@@ -53,4 +53,18 @@ module TusClient
   def self.logger=(value)
     @logger = value
   end
+
+  # Uploaded files are split into "chunks"
+  # This provides the size of each chunk, in bytes
+  def self.chunk_size
+    @chunk_size ||= 10 * TusClient::MEGABYTE
+  end
+
+  # Uploaded files are split into "chunks"
+  # This allows you to assign the size of each chunk, in bytes
+  # chunk_size is often bigger than the size of the uploaded file (thus creating one chunk)
+  def self.chunk_size=(value)
+    raise(ArgumentError, "chunk_size must be an Integer (#{value}).") unless value.is_a?(Integer)
+    @chunk_size = value
+  end
 end

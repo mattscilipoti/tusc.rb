@@ -23,5 +23,25 @@ RSpec.describe TusClient do
     TusClient.log_level = Logger::ERROR
     expect(TusClient.log_level).to eql(Logger::ERROR)
   end
+
+  it 'provides the default chunk_size (10MB)' do
+    expect(TusClient.chunk_size).to eql(10 * 1024 * 1024)
+  end
+
+  it '#chunk_size can be assigned' do
+    new_chunk_size = 512 * TusClient::MEGABYTE
+    expect(TusClient.chunk_size).not_to eql(new_chunk_size)
+    TusClient.chunk_size = new_chunk_size
+    expect(TusClient.chunk_size).to eql(new_chunk_size)
+  end
+
+  it '#chunk_size must be an integer' do
+    expect{
+      TusClient.chunk_size = 1.1
+    }.to raise_error(ArgumentError, /must.*Integer/)
+
+    expect{
+      TusClient.chunk_size = 'abc'
+    }.to raise_error(ArgumentError, /must.*Integer/)
   end
 end

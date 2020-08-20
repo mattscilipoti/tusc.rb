@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a CHANGELOG](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-Upcoming v0.6.4: Support OPTIONS request, code coverage metric
+Upcoming v0.7.0: Support OPTIONS request, TusClient.chunk_size=, code coverage metric
 - Support OPTIONS request via OptionsRequest/Response classes
+- Increase default chunk_size to 10MB
+- Can assign uploaded chunk_size via TusClient.chunk_size
 - Readme lists "What is supported?"
 - Add Coveralls (for [code coverage](https://coveralls.io/r/mattscilipoti/tusc.rb) in Travis CI)
 - Add CodeClimate support and badge

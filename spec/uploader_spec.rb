@@ -71,6 +71,13 @@ RSpec.describe TusClient::Uploader do
   let(:mock_file) { StringIO.new('abc') }
   let(:upload_url) { 'https://tus.io/uploads' }
 
+  describe '#chunk_size' do
+    it 'delegates to TusClient' do
+      expect(TusClient).to receive(:chunk_size).and_return(3)
+      expect(subject.chunk_size).to eql(3)
+    end
+  end
+
   describe '#content_type' do
     it 'is always octet-stream' do
       expect(subject.content_type).to eql(subject.default_content_type)
